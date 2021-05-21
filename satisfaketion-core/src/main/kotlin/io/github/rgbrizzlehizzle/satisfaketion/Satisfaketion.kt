@@ -15,7 +15,7 @@ class Satisfaketion(
   }
 
   fun <T : Any> register(clazz: KClass<T>, init: Faker<T>.() -> Unit) {
-    val builder = Faker<T>()
+    val builder = Faker(clazz)
     builder.apply(init)
     register(clazz, builder)
   }

@@ -6,6 +6,9 @@ kotest = "4.4.3"
 detekt = "1.17.0-RC3"
 
 [libraries]
+# Kotlin
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+
 # Logging
 slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }

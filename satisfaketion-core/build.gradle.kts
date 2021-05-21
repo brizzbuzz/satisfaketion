@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+  implementation(libs.kotlin.reflect)
   implementation(libs.bundles.logging)
   testImplementation(libs.bundles.test)
   detektPlugins(libs.detekt.formatting)
