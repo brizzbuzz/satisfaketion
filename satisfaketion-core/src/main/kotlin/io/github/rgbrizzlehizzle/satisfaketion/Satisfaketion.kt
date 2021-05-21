@@ -9,7 +9,6 @@ class Satisfaketion(
   var fakes: Map<KClass<*>, Faker<*>> = emptyMap()
 ) {
   fun <T : Any> register(clazz: KClass<T>, faker: Faker<T>) {
-    // TODO allow overrides as a separate method?
     require(!fakes.containsKey(clazz)) { "$clazz has already been registered" }
     fakes = fakes.plus(clazz to faker)
   }
@@ -18,6 +17,11 @@ class Satisfaketion(
     val builder = Faker(clazz)
     builder.apply(init)
     register(clazz, builder)
+  }
+
+  inline fun <reified T : Any> generate(): T {
+    val faker = fakes[T::class] ?: error("No registered faker for ${T::class}")
+    return faker.generate() as T
   }
 }
 

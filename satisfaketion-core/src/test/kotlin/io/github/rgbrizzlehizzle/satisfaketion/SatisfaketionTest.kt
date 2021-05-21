@@ -1,11 +1,16 @@
 package io.github.rgbrizzlehizzle.satisfaketion
 
 import io.github.rgbrizzlehizzle.satisfaketion.util.SimpleDataClass
+import io.github.rgbrizzlehizzle.satisfaketion.util.SmolIntGenerator
+import io.github.rgbrizzlehizzle.satisfaketion.util.TestPhoneGenerator
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.ints.shouldBeExactly
+import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
+import io.kotest.matchers.ints.shouldBeLessThanOrEqual
 import io.kotest.matchers.maps.shouldContainKey
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldStartWith
 import kotlin.random.Random
 import org.junit.jupiter.api.assertThrows
@@ -82,6 +87,26 @@ class SatisfaketionTest : DescribeSpec({
       // assert
       result.fakes.size shouldBeExactly 1
       result.fakes shouldContainKey SimpleDataClass::class
+    }
+  }
+  describe("Fakes can be generated") {
+    it("Can generate from a registered fake") {
+      // arrange
+      val satisfaketion = satisfaketion {
+        register(SimpleDataClass::class) {
+          SimpleDataClass::a { TestPhoneGenerator }
+          SimpleDataClass::b { SmolIntGenerator }
+        }
+      }
+
+      // act
+      val result = satisfaketion.generate<SimpleDataClass>()
+
+      // assert
+      result shouldNotBe null
+      result.a shouldMatch "^[1-9]\\d{2}-\\d{3}-\\d{4}"
+      result.b shouldBeLessThanOrEqual 25
+      result.b shouldBeGreaterThanOrEqual 1
     }
   }
 })
