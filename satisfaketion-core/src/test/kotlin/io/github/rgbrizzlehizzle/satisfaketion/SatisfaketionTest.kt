@@ -1,9 +1,14 @@
 package io.github.rgbrizzlehizzle.satisfaketion
 
+import io.github.rgbrizzlehizzle.satisfaketion.util.SimpleDataClass
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.ints.shouldBeExactly
+import io.kotest.matchers.maps.shouldContainKey
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.string.shouldStartWith
 import kotlin.random.Random
+import org.junit.jupiter.api.assertThrows
 
 class SatisfaketionTest : DescribeSpec({
   describe("Class can be instantiated with desired local and seed") {
@@ -32,6 +37,39 @@ class SatisfaketionTest : DescribeSpec({
       // assert
       result shouldNotBe null
       result.locale shouldBe "fr-CA"
+    }
+  }
+  describe("Fakes can be registered") {
+    it("can register a new fake") {
+      // arrange
+      val faker = Faker<SimpleDataClass> {
+        SimpleDataClass::a { }
+      }
+
+      // act
+      val result = Satisfaketion()
+      result.register(SimpleDataClass::class, faker)
+
+      // assert
+      result.fakes.size shouldBeExactly 1
+      result.fakes shouldContainKey SimpleDataClass::class
+    }
+    it("throws an exception when overriding a registered fake") {
+      // arrange
+      val faker = Faker<SimpleDataClass> {
+        SimpleDataClass::a { }
+      }
+      val satisfaketion = satisfaketion {
+        register(SimpleDataClass::class, faker)
+      }
+
+      // act
+      val result = assertThrows<IllegalArgumentException> {
+        satisfaketion.register(SimpleDataClass::class, faker)
+      }
+
+      // assert
+      result.message shouldStartWith "class io.github.rgbrizzlehizzle.satisfaketion.util.SimpleDataClass"
     }
   }
 })
