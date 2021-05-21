@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  implementation(libs.kotlin.reflect)
+  implementation(projects.satisfaketionCore)
   implementation(libs.bundles.logging)
   testImplementation(libs.bundles.test)
   detektPlugins(libs.detekt.formatting)
@@ -12,7 +12,7 @@ dependencies {
 
 publishing {
   publications {
-    create<MavenPublication>("satisfaketion-core") {
+    create<MavenPublication>("satisfaketion-generator") {
       from(components["kotlin"])
       artifact(tasks.sourcesJar)
     }
