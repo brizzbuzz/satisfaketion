@@ -4,7 +4,7 @@ import io.github.rgbrizzlehizzle.satisfaketion.Generator
 import kotlin.random.Random
 import kotlin.random.nextInt
 
-class TestPhoneGenerator : Generator<String> {
+object TestPhoneGenerator : Generator<String> {
   override fun generate(): String {
     val first = Random.Default.nextInt(100..999)
     val second = Random.Default.nextInt(100..999)
@@ -13,6 +13,6 @@ class TestPhoneGenerator : Generator<String> {
   }
 }
 
-class SmolIntGenerator : Generator<Int> {
+object SmolIntGenerator : Generator<Int> {
   override fun generate(): Int = Random.Default.nextInt(1..25)
 }

@@ -1,11 +1,13 @@
 package io.github.rgbrizzlehizzle.satisfaketion
 
+import io.github.rgbrizzlehizzle.satisfaketion.util.AnotherSimpleClass
 import io.github.rgbrizzlehizzle.satisfaketion.util.SimpleDataClass
 import io.github.rgbrizzlehizzle.satisfaketion.util.SmolIntGenerator
 import io.github.rgbrizzlehizzle.satisfaketion.util.TestPhoneGenerator
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
 import io.kotest.matchers.ints.shouldBeLessThanOrEqual
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldStartWith
@@ -36,8 +38,8 @@ class FakerTest : DescribeSpec({
     it("Can generate a faked object") {
       // arrange
       val fake = Faker<SimpleDataClass> {
-        SimpleDataClass::a { TestPhoneGenerator() }
-        SimpleDataClass::b { SmolIntGenerator() }
+        SimpleDataClass::a { TestPhoneGenerator }
+        SimpleDataClass::b { SmolIntGenerator }
       }
 
       // act
@@ -48,6 +50,49 @@ class FakerTest : DescribeSpec({
       result.a shouldMatch "^[1-9]\\d{2}-\\d{3}-\\d{4}"
       result.b shouldBeLessThanOrEqual 25
       result.b shouldBeGreaterThanOrEqual 1
+    }
+    it("Throws an error when not all members have registered a generator") {
+      // arrange
+      val badFake = Faker<SimpleDataClass> {
+        SimpleDataClass::a { TestPhoneGenerator }
+      }
+
+      // act
+      val result = assertThrows<IllegalArgumentException> {
+        badFake.generate()
+      }
+
+      // assert
+      result.message shouldStartWith "No argument provided for a required parameter: parameter #1 b of fun"
+    }
+    it("Can generate a class with a default parameter") {
+      // arrange
+      val fake = Faker<AnotherSimpleClass> {
+        AnotherSimpleClass::c { Generator { true } }
+      }
+
+      // act
+      val result = fake.generate()
+
+      // assert
+      result shouldNotBe null
+      result.c shouldBe true
+      result.d shouldBe "hey dude"
+    }
+    it("Can generate a class with an overridden default") {
+      // arrange
+      val fake = Faker<AnotherSimpleClass> {
+        AnotherSimpleClass::c { Generator { true } }
+        AnotherSimpleClass::d { TestPhoneGenerator }
+      }
+
+      // act
+      val result = fake.generate()
+
+      // assert
+      result shouldNotBe null
+      result.c shouldBe true
+      result.d shouldNotBe "hey dude"
     }
   }
 })
