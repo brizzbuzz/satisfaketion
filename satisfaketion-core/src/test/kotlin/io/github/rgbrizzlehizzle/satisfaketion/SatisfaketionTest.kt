@@ -43,7 +43,7 @@ class SatisfaketionTest : DescribeSpec({
     it("can register a new fake") {
       // arrange
       val faker = Faker<SimpleDataClass> {
-        SimpleDataClass::a { }
+        SimpleDataClass::a { Generator { "string" } }
       }
 
       // act
@@ -57,7 +57,7 @@ class SatisfaketionTest : DescribeSpec({
     it("throws an exception when overriding a registered fake") {
       // arrange
       val faker = Faker<SimpleDataClass> {
-        SimpleDataClass::a { }
+        SimpleDataClass::a { Generator { "test" } }
       }
       val satisfaketion = satisfaketion {
         register(SimpleDataClass::class, faker)
@@ -75,7 +75,7 @@ class SatisfaketionTest : DescribeSpec({
       // act
       val result = satisfaketion {
         register(SimpleDataClass::class) {
-          SimpleDataClass::b { }
+          SimpleDataClass::b { Generator { 123 } }
         }
       }
 
