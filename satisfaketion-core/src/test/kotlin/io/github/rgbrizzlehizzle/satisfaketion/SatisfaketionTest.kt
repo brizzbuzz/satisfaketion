@@ -71,5 +71,17 @@ class SatisfaketionTest : DescribeSpec({
       // assert
       result.message shouldStartWith "class io.github.rgbrizzlehizzle.satisfaketion.util.SimpleDataClass"
     }
+    it("Can declare a faker inline") {
+      // act
+      val result = satisfaketion {
+        register(SimpleDataClass::class) {
+          SimpleDataClass::b { }
+        }
+      }
+
+      // assert
+      result.fakes.size shouldBeExactly 1
+      result.fakes shouldContainKey SimpleDataClass::class
+    }
   }
 })
