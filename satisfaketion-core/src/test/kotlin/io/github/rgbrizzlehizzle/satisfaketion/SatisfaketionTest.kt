@@ -1,5 +1,6 @@
 package io.github.rgbrizzlehizzle.satisfaketion
 
+import io.github.rgbrizzlehizzle.satisfaketion.util.AnotherSimpleClass
 import io.github.rgbrizzlehizzle.satisfaketion.util.SimpleDataClass
 import io.github.rgbrizzlehizzle.satisfaketion.util.SmolIntGenerator
 import io.github.rgbrizzlehizzle.satisfaketion.util.TestPhoneGenerator
@@ -107,6 +108,23 @@ class SatisfaketionTest : DescribeSpec({
       result.a shouldMatch "^[1-9]\\d{2}-\\d{3}-\\d{4}"
       result.b shouldBeLessThanOrEqual 25
       result.b shouldBeGreaterThanOrEqual 1
+    }
+    it("Throws an error when generate called on unregistered class") {
+      // arrange
+      val satisfaketion = satisfaketion {
+        register(SimpleDataClass::class) {
+          SimpleDataClass::a { TestPhoneGenerator }
+          SimpleDataClass::b { SmolIntGenerator }
+        }
+      }
+
+      // act
+      val result = assertThrows<IllegalStateException> {
+        satisfaketion.generate<AnotherSimpleClass>()
+      }
+
+      // assert
+      result.message shouldStartWith "No registered faker for class io.github.rgbrizzlehizzle.satisfaketion.util.AnotherSimpleClass"
     }
   }
 })
