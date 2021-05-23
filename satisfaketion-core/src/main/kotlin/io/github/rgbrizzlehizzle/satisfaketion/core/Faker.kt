@@ -1,4 +1,4 @@
-package io.github.rgbrizzlehizzle.satisfaketion
+package io.github.rgbrizzlehizzle.satisfaketion.core
 
 import kotlin.reflect.KClass
 import kotlin.reflect.KParameter
@@ -20,7 +20,7 @@ class Faker<T : Any>(private val clazz: KClass<T>) {
 
   fun generate(): T {
     val constructor = clazz.primaryConstructor ?: error("$clazz does not have a primary constructor, cannot generate")
-    val generatedParams = propertyMap.mapValues { (k, v) -> v.generate() }
+    val generatedParams = propertyMap.mapValues { (_, v) -> v.generate() }
     return constructor.callBy(generatedParams)
   }
 

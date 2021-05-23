@@ -1,4 +1,4 @@
-package io.github.rgbrizzlehizzle.satisfaketion
+package io.github.rgbrizzlehizzle.satisfaketion.core
 
 import kotlin.random.Random
 import kotlin.reflect.KClass

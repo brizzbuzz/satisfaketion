@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  implementation(projects.satisfaketionCore)
+  api(projects.satisfaketionCore)
   implementation(libs.bundles.logging)
   testImplementation(libs.bundles.test)
   detektPlugins(libs.detekt.formatting)
