@@ -1,9 +1,9 @@
-package io.github.rgbrizzlehizzle.satisfaketion
+package io.github.rgbrizzlehizzle.satisfaketion.core
 
-import io.github.rgbrizzlehizzle.satisfaketion.util.AnotherSimpleClass
-import io.github.rgbrizzlehizzle.satisfaketion.util.SimpleDataClass
-import io.github.rgbrizzlehizzle.satisfaketion.util.SmolIntGenerator
-import io.github.rgbrizzlehizzle.satisfaketion.util.TestPhoneGenerator
+import io.github.rgbrizzlehizzle.satisfaketion.core.util.AnotherSimpleClass
+import io.github.rgbrizzlehizzle.satisfaketion.core.util.SimpleDataClass
+import io.github.rgbrizzlehizzle.satisfaketion.core.util.SmolIntGenerator
+import io.github.rgbrizzlehizzle.satisfaketion.core.util.TestPhoneGenerator
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
@@ -75,7 +75,7 @@ class SatisfaketionTest : DescribeSpec({
       }
 
       // assert
-      result.message shouldStartWith "class io.github.rgbrizzlehizzle.satisfaketion.util.SimpleDataClass"
+      result.message shouldStartWith "class io.github.rgbrizzlehizzle.satisfaketion.core.util.SimpleDataClass"
     }
     it("Can declare a faker inline") {
       // act
@@ -124,7 +124,7 @@ class SatisfaketionTest : DescribeSpec({
       }
 
       // assert
-      result.message shouldStartWith "No registered faker for class io.github.rgbrizzlehizzle.satisfaketion.util.AnotherSimpleClass"
+      result.message shouldStartWith "No registered faker for class io.github.rgbrizzlehizzle.satisfaketion.core.util.AnotherSimpleClass"
     }
   }
 })

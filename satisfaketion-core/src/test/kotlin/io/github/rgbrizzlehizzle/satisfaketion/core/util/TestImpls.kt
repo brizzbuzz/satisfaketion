@@ -1,6 +1,6 @@
-package io.github.rgbrizzlehizzle.satisfaketion.util
+package io.github.rgbrizzlehizzle.satisfaketion.core.util
 
-import io.github.rgbrizzlehizzle.satisfaketion.Generator
+import io.github.rgbrizzlehizzle.satisfaketion.core.Generator
 import kotlin.random.Random
 import kotlin.random.nextInt
 
