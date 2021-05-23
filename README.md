@@ -84,3 +84,9 @@ object TestPhoneGenerator : Generator<String> {
 Collection of useful generators to create fantastic fake data
 
 TODO (doesn't exist yet)
+
+## Limitations
+
+Due to the reflective operations that satisfaketion performs, it will not work on non-public data classes. 
+
+With that said, for internal classes, individual generators can still be used and applied directly to members
