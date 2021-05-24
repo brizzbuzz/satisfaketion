@@ -17,14 +17,14 @@ import kotlin.random.Random
 import org.junit.jupiter.api.assertThrows
 
 class SatisfaketionTest : DescribeSpec({
-  describe("Class can be instantiated with desired local and seed") {
+  describe("Class can be instantiated with a seed") {
     it("Is instantiated when using the class itself") {
       // act
-      val result = Satisfaketion(locale = "tr", random = Random(123))
+      val result = Satisfaketion(random = Random(123))
 
       // assert
       result shouldNotBe null
-      result.locale shouldBe "tr"
+      result.random.nextInt() shouldBeExactly 296510812
     }
     it("Can be instantiated with default params") {
       // act
@@ -33,16 +33,6 @@ class SatisfaketionTest : DescribeSpec({
       // assert
       result shouldNotBe null
       result.random shouldBe Random.Default
-    }
-    it("Can be instantiated with overridden values via function") {
-      // act
-      val result = satisfaketion {
-        locale = "fr-CA"
-      }
-
-      // assert
-      result shouldNotBe null
-      result.locale shouldBe "fr-CA"
     }
   }
   describe("Fakes can be registered") {

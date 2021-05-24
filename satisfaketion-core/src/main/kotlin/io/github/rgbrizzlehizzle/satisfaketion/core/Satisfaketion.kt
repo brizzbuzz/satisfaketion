@@ -4,7 +4,6 @@ import kotlin.random.Random
 import kotlin.reflect.KClass
 
 class Satisfaketion(
-  var locale: String = "en-us", // TODO Enum?
   var random: Random = Random.Default,
   var fakes: Map<KClass<*>, Faker<*>> = emptyMap()
 ) {

@@ -8,6 +8,7 @@ plugins {
   id("io.gitlab.arturbosch.detekt") version "1.17.0-RC3" apply false
   id("com.adarshr.test-logger") version "3.0.0" apply false
   id("com.github.jakemarsden.git-hooks") version "0.0.2" apply true
+  id("io.github.gradle-nexus.publish-plugin") version "1.1.0" apply true
 }
 
 gitHooks {
@@ -20,7 +21,7 @@ gitHooks {
 }
 
 allprojects {
-  group = "io.bkbn"
+  group = "io.github.rgbrizzlehizzle"
   version = run {
     val baseVersion =
       project.findProperty("project.version") ?: error("project.version must be set in gradle.properties")
@@ -79,6 +80,7 @@ allprojects {
 
   configure<JavaPluginExtension> {
     withSourcesJar()
+    withJavadocJar()
   }
 
   configure<PublishingExtension> {
@@ -91,6 +93,15 @@ allprojects {
           password = System.getenv("GITHUB_TOKEN")
         }
       }
+    }
+  }
+}
+
+nexusPublishing {
+  repositories {
+    sonatype {
+      nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+      snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
     }
   }
 }
