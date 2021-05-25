@@ -1,7 +1,8 @@
 package io.github.rgbrizzlehizzle.satisfaketion.generators.en
 
-import io.github.rgbrizzlehizzle.satisfaketion.core.Generator
+import io.github.rgbrizzlehizzle.satisfaketion.core.mutate
 import io.github.rgbrizzlehizzle.satisfaketion.core.satisfaketion
+import io.github.rgbrizzlehizzle.satisfaketion.generators.mutators.WeightedNullabilityMutator
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -16,8 +17,8 @@ class EnglishNameTest : DescribeSpec({
       register(MyPerson::class) {
         MyPerson::firstName { nameGenerator.firstName }
         MyPerson::lastName { nameGenerator.lastName }
-        MyPerson::prefix { nameGenerator.prefix as Generator<String?> }
-        MyPerson::suffix { nameGenerator.suffix as Generator<String?> }
+        MyPerson::prefix { nameGenerator.prefix.mutate(WeightedNullabilityMutator(0.25, seed)) }
+        MyPerson::suffix { nameGenerator.suffix.mutate(WeightedNullabilityMutator(0.25, seed)) }
       }
     }
 

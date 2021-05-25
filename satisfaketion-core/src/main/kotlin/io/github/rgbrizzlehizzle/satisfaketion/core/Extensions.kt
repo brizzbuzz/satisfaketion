@@ -37,3 +37,8 @@ fun Random.nextLetter(upper: Boolean): Char {
  * Returns a random element of a list
  */
 fun <T> List<T>.nextItem(random: Random): T = get(random.nextInt(size))
+
+// Allows for direct mutation on an existing generator
+fun <T, TT> Generator<T>.mutate(mut: Mutator<T, TT>): Generator<TT> {
+  return mut.mutate(this)
+}
