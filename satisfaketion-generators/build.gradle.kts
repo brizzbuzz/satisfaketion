@@ -1,4 +1,5 @@
 plugins {
+  kotlin("plugin.serialization") version "1.5.0"
   `java-library`
   `maven-publish`
   signing
@@ -6,6 +7,8 @@ plugins {
 
 dependencies {
   api(projects.satisfaketionCore)
+  implementation(libs.kotlinx.serialization.json)
+  implementation(libs.kaml)
   implementation(libs.bundles.logging)
   testImplementation(libs.bundles.test)
   detektPlugins(libs.detekt.formatting)

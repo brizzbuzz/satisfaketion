@@ -32,3 +32,8 @@ fun Random.nextLetter(upper: Boolean): Char {
   val source = if (upper) Alphabet.source.uppercase() else Alphabet.source
   return source[nextInt(source.length)]
 }
+
+/**
+ * Returns a random element of a list
+ */
+fun <T> List<T>.nextItem(random: Random): T = get(random.nextInt(size))
