@@ -1,4 +1,4 @@
-package io.github.rgbrizzlehizzle.satisfaketion.generators.mutators
+package io.github.rgbrizzlehizzle.satisfaketion.mutators
 
 import io.github.rgbrizzlehizzle.satisfaketion.core.Generator
 import io.github.rgbrizzlehizzle.satisfaketion.core.Mutator

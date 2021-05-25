@@ -1,7 +1,7 @@
-package io.github.rgbrizzlehizzle.satisfaketion.generators.mutators
+package io.github.rgbrizzlehizzle.satisfaketion.mutators
 
+import io.github.rgbrizzlehizzle.satisfaketion.core.Generator
 import io.github.rgbrizzlehizzle.satisfaketion.core.mutate
-import io.github.rgbrizzlehizzle.satisfaketion.generators.en.EnglishName
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.shouldBe
@@ -12,35 +12,35 @@ class WeightedNullabilityMutatorTest : DescribeSpec({
   it("Can mutate an existing generator") {
     // arrange
     val random = Random(42)
-    val names = EnglishName(random)
+    val generator = simpleGenerator(random)
 
     // act
-    val mutated = names.firstName.mutate(WeightedNullabilityMutator(0.5, random))
+    val mutated = generator.mutate(WeightedNullabilityMutator(0.5, random))
     val results = IntRange(0, 100).map { mutated.generate() }
 
     // assert
-    results.filterNotNull().count() shouldBeExactly 50
+    results.filterNotNull().count() shouldBeExactly 47
   }
   it("Provides results near approximate weight") {
     // arrange
     val random = Random(42)
-    val names = EnglishName(random)
+    val generator = simpleGenerator(random)
 
     // act
-    val mutated = names.firstName.mutate(WeightedNullabilityMutator(0.1, random))
+    val mutated = generator.mutate(WeightedNullabilityMutator(0.1, random))
     val results = IntRange(0, 100).map { mutated.generate() }
 
     // assert
-    results.filterNotNull().count() shouldBeExactly 9
+    results.filterNotNull().count() shouldBeExactly 7
   }
   it("Cannot declare a weight over 1") {
     // arrange
     val random = Random(42)
-    val names = EnglishName(random)
+    val generator = simpleGenerator(random)
 
     // act
     val result = assertThrows<IllegalArgumentException> {
-      names.firstName.mutate(WeightedNullabilityMutator(1.5, random))
+      generator.mutate(WeightedNullabilityMutator(1.5, random))
     }
 
     // assert
@@ -49,14 +49,18 @@ class WeightedNullabilityMutatorTest : DescribeSpec({
   it("Cannot declare a weight of 0") {
     // arrange
     val random = Random(42)
-    val names = EnglishName(random)
+    val generator = simpleGenerator(random)
 
     // act
     val result = assertThrows<IllegalArgumentException> {
-      names.firstName.mutate(WeightedNullabilityMutator(0.0, random))
+      generator.mutate(WeightedNullabilityMutator(0.0, random))
     }
 
     // assert
     result.message shouldBe "Weight 0.0 invalid: must be between 0 and 1"
   }
-})
+}) {
+  companion object {
+    fun simpleGenerator(random: Random): Generator<Int> = Generator { random.nextInt() }
+  }
+}

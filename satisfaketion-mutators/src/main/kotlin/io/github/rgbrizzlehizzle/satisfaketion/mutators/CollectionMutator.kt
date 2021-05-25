@@ -1,4 +1,4 @@
-package io.github.rgbrizzlehizzle.satisfaketion.generators.mutators
+package io.github.rgbrizzlehizzle.satisfaketion.mutators
 
 import io.github.rgbrizzlehizzle.satisfaketion.core.Generator
 import io.github.rgbrizzlehizzle.satisfaketion.core.Mutator
@@ -16,7 +16,15 @@ class CollectionMutator<T : Any>(
   }
 
   override fun mutate(generator: Generator<T>): Generator<List<T>> = Generator {
-    val length = random.nextInt(minLength, maxLength)
-    IntRange(0, length).map { generator.generate() }
+    if (maxLength == 0) {
+      emptyList()
+    } else {
+      val length = random.nextInt(minLength, maxLength)
+      if (length == 0) {
+        emptyList()
+      } else {
+        IntRange(0, length).map { generator.generate() }
+      }
+    }
   }
 }

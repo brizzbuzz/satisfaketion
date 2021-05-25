@@ -2,7 +2,7 @@ package io.github.rgbrizzlehizzle.satisfaketion.generators.en
 
 import io.github.rgbrizzlehizzle.satisfaketion.core.mutate
 import io.github.rgbrizzlehizzle.satisfaketion.core.satisfaketion
-import io.github.rgbrizzlehizzle.satisfaketion.generators.mutators.WeightedNullabilityMutator
+import io.github.rgbrizzlehizzle.satisfaketion.mutators.WeightedNullabilityMutator
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
