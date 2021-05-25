@@ -110,6 +110,32 @@ fun interface Mutator<R, RR> {
 
 Mutators allow you to take an existing `Generator` and mutate it, allowing for expansive reuse of base generators.
 
+Let's say you have a data class `MyPerson`
+
+```kotlin
+data class MyPerson(
+    val firstName: String,
+    val lastName: String,
+    val prefix: String?,
+    val suffix: String?,
+)
+```
+
+using the existing `EnglishName` generator, you can declare a satisfaketion instance, with mutators to add weighted mutability to the `prefix` and `suffix` fields 
+
+```kotlin
+val satisfaketion = satisfaketion {
+  register(MyPerson::class) {
+    MyPerson::firstName { nameGenerator.firstName }
+    MyPerson::lastName { nameGenerator.lastName }
+    MyPerson::prefix { nameGenerator.prefix.mutate(WeightedNullabilityMutator(0.25, seed)) }
+    MyPerson::suffix { nameGenerator.suffix.mutate(WeightedNullabilityMutator(0.25, seed)) }
+  }
+}
+```
+
+This would cause approximately 25% of generated objects to have a null field for `prefix` and/or `suffix`
+
 ### Generators ♺
 
 Collection of useful generators to create fantastic fake data
