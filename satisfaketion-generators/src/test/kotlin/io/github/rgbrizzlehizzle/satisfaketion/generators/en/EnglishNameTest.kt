@@ -30,8 +30,8 @@ class EnglishNameTest : DescribeSpec({
     result shouldBe MyPerson(
       firstName = "Phoenix",
       lastName = "Howe",
-      prefix = "Ms.",
-      suffix = "LLD"
+      prefix = null,
+      suffix = "PhD"
     )
   }
 }) {
