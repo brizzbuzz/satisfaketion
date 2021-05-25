@@ -1,13 +1,32 @@
 # Satisfaketion
 
-A Zero-Dependency Kotlin Faker implementation built to leave you fully satisfied 😏
+A Zero-Dependency Kotlin Faker implementation built to leave you fully satisfied 😏 ... With your fake data
 
-... With your fake data
+## How to Install 🚀
 
-## How to Install
+Satisfaketion publishes all releases to Maven Central.  As such, using the stable version of `Satisfaketion` is as simple 
+as declaring it as an implementation dependency in your `build.gradle.kts`
 
-Satisfaketion uses GitHub packages as its repository.  Installing with Gradle is pretty painless.  In your `build.gradle.kts`
-add the following
+```kotlin
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  // other (less cool) dependencies
+  testImplementation("io.github.rgbrizzlehizzle:satisfaketion-core:latest")
+  testImplementation("io.github.rgbrizzlehizzle:satisfaketion-generators:latest")
+  testImplementation("io.github.rgbrizzlehizzle:satisfaketion-mutators:latest")
+}
+```
+
+The last two dependencies are optional, as they are the out-of-the-box generators and mutators that Satisfaketion provides,
+but they are by no means mandatory.  However, if you write an awesome generator or mutator that you think the community 
+would love, please open an issue [here](https://github.com/rgbrizzlehizzle/satisfaketion/issues) to discuss adding it 
+to the repository
+
+If you want to get a little spicy 🤠 every merge of Satisfaketion is published to the GitHub package registry.  Pulling 
+from GitHub is slightly more involved, but such is the price you pay for bleeding edge fake data generation.  
 
 ```kotlin
 // 1 Setup a helper function to import any Github Repository Package
@@ -15,7 +34,7 @@ add the following
 fun RepositoryHandler.github(packageUrl: String) = maven { 
   name = "GithubPackages"
   url = uri(packageUrl)
-  credentials { // TODO Not sure this is necessary for public repositories?
+  credentials {
     username = java.lang.System.getenv("GITHUB_USER")
     password = java.lang.System.getenv("GITHUB_TOKEN")
   } 
@@ -28,18 +47,18 @@ repositories {
 
 // 3 Add the package like any normal dependency
 dependencies { 
-  implementation("io.bkbn:satisfaketion-core:0.1.0-SNAPSHOT")
-  implementation("io.bkbn:satisfaketion-core:0.1.0-SNAPSHOT")
+  implementation("io.bkbn:satisfaketion-core:latest")
 }
 
 ```
 
-## In Depth
+## In Depth 👀
 
-Satisfaketion is broken into two main library modules
+Satisfaketion is broken into three main library modules
 
 - Core
 - Generators
+- Mutators
 
 ### Core
 
@@ -79,13 +98,39 @@ object TestPhoneGenerator : Generator<String> {
 }
 ```
 
-### Generators
+Another concept that is at the core of `Satisfaketion` is the `Mutator`.
+
+A `Mutator` is another functional interface
+
+```kotlin
+fun interface Mutator<R, RR> {
+  fun mutate(generator: Generator<R>): Generator<RR>
+}
+```
+
+Mutators allow you to take an existing `Generator` and mutate it, allowing for expansive reuse of base generators.
+
+### Generators ♺
 
 Collection of useful generators to create fantastic fake data
 
-TODO (doesn't exist yet)
+The current list of pre-existing generators is
 
-## Limitations
+- English Names
+- United States Address
+- Beer
+- Barcodes
+
+If you would like to add a generator, please first open an issue [here](https://github.com/rgbrizzlehizzle/satisfaketion/issues) explaining the use case.
+
+### Mutators 🦋
+
+Collection of useful mutators
+
+- `WeightedNullabilityMutator`: Given a weight between 0 and 1, will mutate a generator to provided interspersed null values in accordance with the provided weight
+- `CollectionMutator`: Takes a standard generator and converts it to a `List` generator
+
+## Limitations 🚨
 
 Due to the reflective operations that satisfaketion performs, it will not work on non-public data classes. 
 
