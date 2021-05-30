@@ -77,6 +77,7 @@ allprojects {
   tasks.withType<JacocoReport>() {
     reports {
       html.isEnabled = true
+      xml.isEnabled = true
     }
   }
 
