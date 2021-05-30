@@ -24,7 +24,7 @@ allprojects {
   group = "io.github.rgbrizzlehizzle"
   version = run {
     val baseVersion =
-      project.findProperty("project.version") ?: error("project.version must be set in gradle.propertayys")
+      project.findProperty("project.version") ?: error("project.version must be set in gradle.properties")
     when ((project.findProperty("release") as? String)?.toBoolean()) {
       true -> baseVersion
       else -> "$baseVersion-SNAPSHOT"
