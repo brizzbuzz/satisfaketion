@@ -39,12 +39,14 @@ allprojects {
   apply(plugin = "org.jetbrains.kotlin.jvm")
   apply(plugin = "io.gitlab.arturbosch.detekt")
   apply(plugin = "com.adarshr.test-logger")
+  apply(plugin = "jacoco")
   apply(plugin = "java-library")
   apply(plugin = "maven-publish")
   apply(plugin = "idea")
 
   tasks.withType<Test>() {
     useJUnitPlatform()
+    finalizedBy(tasks.withType(JacocoReport::class))
   }
 
   configure<TestLoggerExtension> {
@@ -72,6 +74,12 @@ allprojects {
     }
   }
 
+  tasks.withType<JacocoReport>() {
+    reports {
+      html.isEnabled = true
+    }
+  }
+
   configure<DetektExtension> {
     toolVersion = "1.17.0-RC3"
     config = files("${rootProject.projectDir}/detekt.yml")
@@ -94,6 +102,10 @@ allprojects {
         }
       }
     }
+  }
+
+  configure<JacocoPluginExtension> {
+    toolVersion = "0.8.7"
   }
 }
 
