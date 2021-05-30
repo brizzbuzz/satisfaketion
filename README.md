@@ -2,6 +2,9 @@
 
 A Zero-Dependency Kotlin Faker implementation built to leave you fully satisfied 😏 ... With your fake data
 
+[![codecov](https://codecov.io/gh/rgbrizzlehizzle/satisfaketion/branch/main/graph/badge.svg?token=WG42G5BPLQ)](https://codecov.io/gh/rgbrizzlehizzle/satisfaketion)
+[![version](https://img.shields.io/maven-central/v/io.github.rgbrizzlehizzle/satisfaketion-core?style=flat-square)](https://search.maven.org/artifact/io.github.rgbrizzlehizzle/satisfaketion-core/0.3.0/jar)
+
 ## How to Install 🚀
 
 Satisfaketion publishes all releases to Maven Central.  As such, using the stable version of `Satisfaketion` is as simple 
