@@ -37,3 +37,11 @@ jobs:
         run: ./gradlew assemble
       - name: Run Unit Tests
         run: ./gradlew test
+      - name: Publish Code Coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml
+          directory: ./coverage/reports/
+          fail_ci_if_error: true
+          verbose: true

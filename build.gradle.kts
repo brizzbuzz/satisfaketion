@@ -39,12 +39,14 @@ allprojects {
   apply(plugin = "org.jetbrains.kotlin.jvm")
   apply(plugin = "io.gitlab.arturbosch.detekt")
   apply(plugin = "com.adarshr.test-logger")
+  apply(plugin = "jacoco")
   apply(plugin = "java-library")
   apply(plugin = "maven-publish")
   apply(plugin = "idea")
 
   tasks.withType<Test>() {
     useJUnitPlatform()
+    finalizedBy(tasks.withType(JacocoReport::class))
   }
 
   configure<TestLoggerExtension> {
@@ -72,6 +74,13 @@ allprojects {
     }
   }
 
+  tasks.withType<JacocoReport>() {
+    reports {
+      html.isEnabled = true
+      xml.isEnabled = true
+    }
+  }
+
   configure<DetektExtension> {
     toolVersion = "1.17.0-RC3"
     config = files("${rootProject.projectDir}/detekt.yml")
@@ -95,6 +104,10 @@ allprojects {
       }
     }
   }
+
+  configure<JacocoPluginExtension> {
+    toolVersion = "0.8.7"
+  }
 }
 
 nexusPublishing {
@@ -103,5 +116,23 @@ nexusPublishing {
       nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
       snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
     }
+  }
+}
+
+tasks.register<JacocoReport>("jacocoRootReport") {
+  subprojects {
+    this@subprojects.plugins.withType<JacocoPlugin>().configureEach {
+      this@subprojects.tasks.matching {
+        it.extensions.findByType<JacocoTaskExtension>() != null }
+        .configureEach {
+          sourceSets(this@subprojects.the<SourceSetContainer>().named("main").get())
+          executionData(this)
+        }
+    }
+  }
+
+  reports {
+    xml.isEnabled = true
+    html.isEnabled = true
   }
 }
