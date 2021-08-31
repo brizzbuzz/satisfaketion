@@ -24,12 +24,12 @@ class Faker<T : Any>(private val clazz: KClass<T>) {
     return constructor.callBy(generatedParams)
   }
 
-  operator fun <R> KProperty1<T, R>.invoke(init: (r: R?) -> Generator<R>) {
+  operator fun <R> KProperty1<T, R>.invoke(init: (KProperty1<T, R>) -> Generator<R>) {
     logger.debug("Look ma I'm in a property 🤠")
     val param = clazz.primaryConstructor?.parameters?.find { it.name == name }
       ?: error("Unable to match $name to a parameter for $clazz")
     require(!propertyMap.containsKey(param)) { "${param.name} has already been registered" }
-    val generator = init.invoke(null) // TODO WHY THE F$*# DO I NEED THIS GENERIC PARAM / RECEIVER
+    val generator = init.invoke(this)
     propertyMap = propertyMap.plus(param to generator)
   }
 }
