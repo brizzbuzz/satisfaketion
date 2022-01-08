@@ -1,7 +1,7 @@
 import io.bkbn.sourdough.gradle.core.extension.SourdoughLibraryExtension
 
 plugins {
-  id("io.bkbn.sourdough.root") version "0.3.1"
+  id("io.bkbn.sourdough.root") version "0.3.2"
   id("com.github.jakemarsden.git-hooks") version "0.0.2"
 }
 
