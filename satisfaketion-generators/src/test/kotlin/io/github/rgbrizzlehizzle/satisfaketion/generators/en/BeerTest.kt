@@ -10,10 +10,9 @@ class BeerTest : DescribeSpec({
   it("Can generate a brand") {
     // arrange
     val seed = 123
-    val beer = Beer(Random(seed))
 
     // act
-    val result = beer.brand.generate()
+    val result = Beer.brand.generate(Random(seed))
 
     // assert
     result shouldBe "Budweiser"
@@ -21,20 +20,19 @@ class BeerTest : DescribeSpec({
   it("Can populate an entire data class") {
     // arrange
     val seed = 555
-    val beer = Beer(Random(seed))
     val satisfaketion = satisfaketion {
       register(DasBeer::class) {
-        DasBeer::brand { beer.brand }
-        DasBeer::name { beer.name }
-        DasBeer::hop { beer.hop }
-        DasBeer::yeast { beer.yeast }
-        DasBeer::malt { beer.malt }
-        DasBeer::style { beer.style }
+        DasBeer::brand { Beer.brand }
+        DasBeer::name { Beer.name }
+        DasBeer::hop { Beer.hop }
+        DasBeer::yeast { Beer.yeast }
+        DasBeer::malt { Beer.malt }
+        DasBeer::style { Beer.style }
       }
     }
 
     // act
-    val result = satisfaketion.generate<DasBeer>()
+    val result = satisfaketion.generate<DasBeer>(Random(seed))
 
     // assert
     val expected = DasBeer(
@@ -49,22 +47,21 @@ class BeerTest : DescribeSpec({
   }
   it("Generates different results when called consecutively") {
     // arrange
-    val seed = 555
-    val beer = Beer(Random(seed))
+    val seed = Random(555)
     val satisfaketion = satisfaketion {
       register(DasBeer::class) {
-        DasBeer::brand { beer.brand }
-        DasBeer::name { beer.name }
-        DasBeer::hop { beer.hop }
-        DasBeer::yeast { beer.yeast }
-        DasBeer::malt { beer.malt }
-        DasBeer::style { beer.style }
+        DasBeer::brand { Beer.brand }
+        DasBeer::name { Beer.name }
+        DasBeer::hop { Beer.hop }
+        DasBeer::yeast { Beer.yeast }
+        DasBeer::malt { Beer.malt }
+        DasBeer::style { Beer.style }
       }
     }
 
     // act
-    val resultA = satisfaketion.generate<DasBeer>()
-    val resultB = satisfaketion.generate<DasBeer>()
+    val resultA = satisfaketion.generate<DasBeer>(seed)
+    val resultB = satisfaketion.generate<DasBeer>(seed)
 
     // assert
     resultA shouldNotBe resultB

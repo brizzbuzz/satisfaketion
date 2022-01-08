@@ -1,37 +1,36 @@
 package io.github.rgbrizzlehizzle.satisfaketion.generators.en
 
 import io.github.rgbrizzlehizzle.satisfaketion.core.Generator
-import kotlin.random.Random
 
-class Beer(private val random: Random = Random.Default) {
+object Beer {
 
-  val brand = Generator {
-    val index = random.nextInt(brands.size)
+  val brand = Generator { r ->
+    val index = r.nextInt(brands.size)
     brands[index]
   }
 
-  val name = Generator {
-    val index = random.nextInt(names.size)
+  val name = Generator { r ->
+    val index = r.nextInt(names.size)
     names[index]
   }
 
-  val hop = Generator {
-    val index = random.nextInt(hops.size)
+  val hop = Generator { r ->
+    val index = r.nextInt(hops.size)
     hops[index]
   }
 
-  val yeast = Generator {
-    val index = random.nextInt(yeasts.size)
+  val yeast = Generator { r ->
+    val index = r.nextInt(yeasts.size)
     yeasts[index]
   }
 
-  val malt = Generator {
-    val index = random.nextInt(malts.size)
+  val malt = Generator { r ->
+    val index = r.nextInt(malts.size)
     malts[index]
   }
 
-  val style = Generator {
-    val index = random.nextInt(styles.size)
+  val style = Generator { r ->
+    val index = r.nextInt(styles.size)
     styles[index]
   }
 

@@ -8,10 +8,9 @@ class BarcodeTest : DescribeSpec({
   it("Can generate an ean8") {
     // arrange
     val seed = 123
-    val barcode = Barcode(Random(seed))
 
     // act
-    val result = barcode.ean8.generate()
+    val result = Barcode.ean8.generate(Random(seed))
 
     // assert
     result shouldBe "6583760"
@@ -19,12 +18,10 @@ class BarcodeTest : DescribeSpec({
   it("Produces deterministic results") {
     // arrange
     val seed = 12345
-    val barcodeA = Barcode(Random(seed))
-    val barcodeB = Barcode(Random(seed))
 
     // act
-    val resultA = barcodeA.compositeSymbol.generate()
-    val resultB = barcodeB.compositeSymbol.generate()
+    val resultA = Barcode.compositeSymbol.generate(Random(seed))
+    val resultB = Barcode.compositeSymbol.generate(Random(seed))
 
     // assert
     resultA shouldBe resultB

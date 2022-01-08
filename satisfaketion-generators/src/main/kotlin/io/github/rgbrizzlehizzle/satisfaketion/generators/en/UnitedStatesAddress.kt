@@ -1,111 +1,110 @@
 package io.github.rgbrizzlehizzle.satisfaketion.generators.en
 
 import com.charleskorn.kaml.Yaml
+import io.github.rgbrizzlehizzle.satisfaketion.core.Extensions.nextItem
+import io.github.rgbrizzlehizzle.satisfaketion.core.Extensions.numerify
 import io.github.rgbrizzlehizzle.satisfaketion.core.Generator
-import io.github.rgbrizzlehizzle.satisfaketion.core.nextItem
-import io.github.rgbrizzlehizzle.satisfaketion.core.numerify
 import io.github.rgbrizzlehizzle.satisfaketion.generators.common.Address
 import io.github.rgbrizzlehizzle.satisfaketion.generators.common.Utils
 import kotlin.random.Random
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 
-class UnitedStatesAddress(private val random: Random = Random.Default) : Address {
+object UnitedStatesAddress : Address {
 
-  private companion object {
-    @Serializable
-    data class UnitedStatesAddressMetadata(
-      val cityPrefix: List<String>,
-      val citySuffix: List<String>,
-      val streetSuffix: List<String>,
-      val communityPrefix: List<String>,
-      val communitySuffix: List<String>,
-      val postcodesByState: Map<String, String>,
-      val states: List<String>,
-      val stateCodes: List<String>
-    )
-  }
+  @Serializable
+  data class UnitedStatesAddressMetadata(
+    val cityPrefix: List<String>,
+    val citySuffix: List<String>,
+    val streetSuffix: List<String>,
+    val communityPrefix: List<String>,
+    val communitySuffix: List<String>,
+    val postcodesByState: Map<String, String>,
+    val states: List<String>,
+    val stateCodes: List<String>
+  )
 
   private val yaml = Utils.getFile("united_states_address.yaml")
   private val metadata = Yaml.default.decodeFromString<UnitedStatesAddressMetadata>(yaml)
-  private val nameGenerator = EnglishName(random)
 
   override val name: String = "United States"
   override val code: String = "USA"
 
-  override val buildingNumber: Generator<Int> = Generator {
+  override val buildingNumber: Generator<Int> = Generator { r ->
     val buildingNumbers = listOf("#####", "####", "###")
-    val format = buildingNumbers.nextItem(random)
-    format.numerify(random).toInt()
+    val format = buildingNumbers.nextItem(r)
+    format.numerify(r).toInt()
   }
 
-  override val community: Generator<String> = Generator {
-    "${metadata.communityPrefix.nextItem(random)} ${metadata.communitySuffix.nextItem(random)}"
+  override val community: Generator<String> = Generator { r ->
+    "${metadata.communityPrefix.nextItem(r)} ${metadata.communitySuffix.nextItem(r)}"
   }
 
-  override val secondaryAddress: Generator<String> = Generator {
+  override val secondaryAddress: Generator<String> = Generator { r ->
     val formats = listOf("Apt. ###", "Suite ###")
-    formats.nextItem(random).numerify(random)
+    formats.nextItem(r).numerify(r)
   }
 
-  override val postcode: Generator<String> = Generator { "#####".numerify(random) }
+  override val postcode: Generator<String> = Generator { r -> "#####".numerify(r) }
 
-  val postCodeWithLocal: Generator<String> = Generator { "#####-####".numerify(random) }
+  val postCodeWithLocal: Generator<String> = Generator { r -> "#####-####".numerify(r) }
 
-  fun postcodeByState(stateCode: String, local: Boolean = false): Generator<String> = Generator {
+  fun postcodeByState(stateCode: String, local: Boolean = false): Generator<String> = Generator { r ->
     val state = metadata.postcodesByState[stateCode] ?: error("Invalid state code $stateCode provided")
-    val postCode = state.numerify(random)
+    val postCode = state.numerify(r)
     if (local) {
-      postCode.plus("-####").numerify(random)
+      postCode.plus("-####").numerify(r)
     } else {
       postCode
     }
   }
 
-  val state: Generator<String> = Generator { metadata.states.nextItem(random) }
+  val state: Generator<String> = Generator { r -> metadata.states.nextItem(r) }
 
-  val stateCode: Generator<String> = Generator { metadata.stateCodes.nextItem(random) }
+  val stateCode: Generator<String> = Generator { r -> metadata.stateCodes.nextItem(r) }
 
-  override val timeZone: Generator<String> = Generator {
+  override val timeZone: Generator<String> = Generator { r ->
     val timezones = listOf("HAT", "AST", "PT", "MT", "CT", "ET")
-    timezones.nextItem(random)
+    timezones.nextItem(r)
   }
 
-  override val city: Generator<String> = Generator { cityStreetGenerator(metadata.citySuffix.nextItem(random)) }
+  override val city: Generator<String> = Generator { r -> cityStreetGenerator(metadata.citySuffix.nextItem(r), r) }
 
   override val streetName: Generator<String> =
-    Generator { cityStreetGenerator(" ".plus(metadata.streetSuffix.nextItem(random))) }
+    Generator { r -> cityStreetGenerator(" ".plus(metadata.streetSuffix.nextItem(r)), r) }
 
-  private fun cityStreetGenerator(suffix: String): String {
+  private fun cityStreetGenerator(suffix: String, seed: Random): String {
     val sb = StringBuilder()
-    when (random.nextBoolean()) {
-      true -> sb.append(metadata.cityPrefix.nextItem(random).plus(" "))
+    when (seed.nextBoolean()) {
+      true -> sb.append(metadata.cityPrefix.nextItem(seed).plus(" "))
       false -> Unit
     }
-    when (random.nextBoolean()) {
-      true -> sb.append("${nameGenerator.firstName.generate()}$suffix")
-      false -> sb.append("${nameGenerator.lastName.generate()}$suffix")
+    when (seed.nextBoolean()) {
+      true -> sb.append("${EnglishName.firstName.generate(seed)}$suffix")
+      false -> sb.append("${EnglishName.lastName.generate(seed)}$suffix")
     }
     return sb.toString()
   }
 
-  override val streetAddress: Generator<String> = Generator { "${buildingNumber.generate()} ${streetName.generate()}" }
+  override val streetAddress: Generator<String> =
+    Generator { r -> "${buildingNumber.generate(r)} ${streetName.generate(r)}" }
 
-  override val fullAddress: Generator<String> = Generator {
+  override val fullAddress: Generator<String> = Generator { r ->
     val sb = StringBuilder()
-    sb.append(streetAddress.generate()).append(", ")
-    when (random.nextBoolean()) {
-      true -> sb.append(secondaryAddress.generate()).append(", ")
+    sb.append(streetAddress.generate(r)).append(", ")
+    when (r.nextBoolean()) {
+      true -> sb.append(secondaryAddress.generate(r)).append(", ")
+      else -> {}
     }
-    sb.append(city.generate()).append(", ")
-    val sc = stateCode.generate()
+    sb.append(city.generate(r)).append(", ")
+    val sc = stateCode.generate(r)
     sb.append(sc).append(" ")
-    sb.append(postcodeByState(sc).generate())
+    sb.append(postcodeByState(sc).generate(r))
     sb.toString()
   }
 
-  override val mailbox: Generator<String> = Generator {
+  override val mailbox: Generator<String> = Generator { r ->
     val formats = listOf("PO Box ##", "PO Box ###", "PO Box ####")
-    formats.nextItem(random).numerify(random)
+    formats.nextItem(r).numerify(r)
   }
 }

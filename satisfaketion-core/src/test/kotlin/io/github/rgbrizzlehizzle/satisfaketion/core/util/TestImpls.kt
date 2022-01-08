@@ -5,14 +5,14 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 
 object TestPhoneGenerator : Generator<String> {
-  override fun generate(): String {
-    val first = Random.Default.nextInt(100..999)
-    val second = Random.Default.nextInt(100..999)
-    val third = Random.Default.nextInt(1000..9999)
+  override fun generate(seed: Random): String {
+    val first = seed.nextInt(100..999)
+    val second = seed.nextInt(100..999)
+    val third = seed.nextInt(1000..9999)
     return "$first-$second-$third"
   }
 }
 
 object SmolIntGenerator : Generator<Int> {
-  override fun generate(): Int = Random.Default.nextInt(1..25)
+  override fun generate(seed: Random): Int = seed.nextInt(1..25)
 }

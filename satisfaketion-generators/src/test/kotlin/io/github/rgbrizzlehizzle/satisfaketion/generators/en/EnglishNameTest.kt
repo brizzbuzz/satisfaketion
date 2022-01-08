@@ -1,6 +1,6 @@
 package io.github.rgbrizzlehizzle.satisfaketion.generators.en
 
-import io.github.rgbrizzlehizzle.satisfaketion.core.mutate
+import io.github.rgbrizzlehizzle.satisfaketion.core.Extensions.mutate
 import io.github.rgbrizzlehizzle.satisfaketion.core.satisfaketion
 import io.github.rgbrizzlehizzle.satisfaketion.mutators.WeightedNullabilityMutator
 import io.kotest.core.spec.style.DescribeSpec
@@ -12,18 +12,17 @@ class EnglishNameTest : DescribeSpec({
   it("Can generate a person object") {
     // arrange
     val seed = Random(42)
-    val nameGenerator = EnglishName(seed)
     val satisfaketion = satisfaketion {
       register(MyPerson::class) {
-        MyPerson::firstName { nameGenerator.firstName }
-        MyPerson::lastName { nameGenerator.lastName }
-        MyPerson::prefix { nameGenerator.prefix.mutate(WeightedNullabilityMutator(0.25, seed)) }
-        MyPerson::suffix { nameGenerator.suffix.mutate(WeightedNullabilityMutator(0.25, seed)) }
+        MyPerson::firstName { EnglishName.firstName }
+        MyPerson::lastName { EnglishName.lastName }
+        MyPerson::prefix { EnglishName.prefix.mutate(WeightedNullabilityMutator(0.25, seed)) }
+        MyPerson::suffix { EnglishName.suffix.mutate(WeightedNullabilityMutator(0.25, seed)) }
       }
     }
 
     // act
-    val result = satisfaketion.generate<MyPerson>()
+    val result = satisfaketion.generate<MyPerson>(seed)
 
     // assert
     result shouldNotBe null

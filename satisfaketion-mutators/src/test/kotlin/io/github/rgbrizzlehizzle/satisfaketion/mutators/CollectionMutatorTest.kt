@@ -1,7 +1,7 @@
 package io.github.rgbrizzlehizzle.satisfaketion.mutators
 
+import io.github.rgbrizzlehizzle.satisfaketion.core.Extensions.mutate
 import io.github.rgbrizzlehizzle.satisfaketion.core.Generator
-import io.github.rgbrizzlehizzle.satisfaketion.core.mutate
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.shouldBe
@@ -12,11 +12,10 @@ class CollectionMutatorTest : DescribeSpec({
   it("Can mutate an existing generator") {
     // arrange
     val random = Random(42)
-    val generator = simpleGenerator(random)
 
     // act
-    val mutated = generator.mutate(CollectionMutator(5, 100, random))
-    val results = mutated.generate()
+    val mutated = simpleGenerator.mutate(CollectionMutator(5, 100, random))
+    val results = mutated.generate(random)
 
     // assert
     results.count() shouldBeExactly 24
@@ -24,11 +23,10 @@ class CollectionMutatorTest : DescribeSpec({
   it("Throws an error when min length is less than 0") {
     // arrange
     val random = Random(42)
-    val generator = simpleGenerator(random)
 
     // act
     val result = assertThrows<IllegalArgumentException> {
-      generator.mutate(CollectionMutator(-10, 10, random))
+      simpleGenerator.mutate(CollectionMutator(-10, 10, random))
     }
 
     // assert
@@ -37,11 +35,10 @@ class CollectionMutatorTest : DescribeSpec({
   it("Throws an error when mix length is greater than max length") {
     // arrange
     val random = Random(42)
-    val generator = simpleGenerator(random)
 
     // act
     val result = assertThrows<IllegalArgumentException> {
-      generator.mutate(CollectionMutator(100, 10, random))
+      simpleGenerator.mutate(CollectionMutator(100, 10, random))
     }
 
     // assert
@@ -50,17 +47,16 @@ class CollectionMutatorTest : DescribeSpec({
   it("can produce an empty list") {
     // arrange
     val random = Random(42)
-    val generator = simpleGenerator(random)
 
     // act
-    val mutated = generator.mutate(CollectionMutator(0, 0, random))
-    val results = mutated.generate()
+    val mutated = simpleGenerator.mutate(CollectionMutator(0, 0, random))
+    val results = mutated.generate(random)
 
     // assert
     results.count() shouldBeExactly 0
   }
 }) {
   companion object {
-    fun simpleGenerator(random: Random): Generator<Int> = Generator { random.nextInt() }
+    val simpleGenerator: Generator<Int> = Generator { r -> r.nextInt() }
   }
 }

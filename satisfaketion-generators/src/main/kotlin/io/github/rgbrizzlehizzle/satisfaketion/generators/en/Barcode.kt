@@ -1,35 +1,34 @@
 package io.github.rgbrizzlehizzle.satisfaketion.generators.en
 
+import io.github.rgbrizzlehizzle.satisfaketion.core.Extensions.letterify
+import io.github.rgbrizzlehizzle.satisfaketion.core.Extensions.numerify
 import io.github.rgbrizzlehizzle.satisfaketion.core.Generator
-import io.github.rgbrizzlehizzle.satisfaketion.core.letterify
-import io.github.rgbrizzlehizzle.satisfaketion.core.numerify
-import kotlin.random.Random
 
-class Barcode(private val random: Random = Random.Default) {
-  val ean8 = Generator { "#######".numerify(random) }
+object Barcode {
+  val ean8 = Generator { r -> "#######".numerify(r) }
 
-  val ean13 = Generator { "############".numerify(random) }
+  val ean13 = Generator { r -> "############".numerify(r) }
 
-  val upcA = Generator { "###########".numerify(random) }
+  val upcA = Generator { r -> "###########".numerify(r) }
 
-  val upcE = Generator {
-    val format = upcEs[random.nextInt(upcEs.size)]
-    format.numerify(random)
+  val upcE = Generator { r ->
+    val format = upcEs[r.nextInt(upcEs.size)]
+    format.numerify(r)
   }
 
-  val compositeSymbol = Generator {
-    val format = compositeSymbols[random.nextInt(compositeSymbols.size)]
-    format.numerify(random).letterify(random)
+  val compositeSymbol = Generator { r ->
+    val format = compositeSymbols[r.nextInt(compositeSymbols.size)]
+    format.numerify(r).letterify(r)
   }
 
-  val isbn = Generator {
-    val format = isbns[random.nextInt(isbns.size)]
-    format.numerify(random)
+  val isbn = Generator { r ->
+    val format = isbns[r.nextInt(isbns.size)]
+    format.numerify(r)
   }
 
-  val ismn = Generator { "9790########".numerify(random) }
+  val ismn = Generator { r -> "9790########".numerify(r) }
 
-  val issn = Generator { "977#########".numerify(random) }
+  val issn = Generator { r -> "977#########".numerify(r) }
 
   private val upcEs = listOf("0######", "1######")
   private val compositeSymbols = listOf(

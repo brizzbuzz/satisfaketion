@@ -23,7 +23,7 @@ class CollectionMutator<T : Any>(
       if (length == 0) {
         emptyList()
       } else {
-        IntRange(0, length).map { generator.generate() }
+        IntRange(0, length).map { generator.generate(random) }
       }
     }
   }

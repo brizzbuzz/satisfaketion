@@ -9,10 +9,9 @@ class UnitedStatesAddressTest : DescribeSpec({
   it("Can generate a unique building code") {
     // arrange
     val random = Random(42)
-    val address = UnitedStatesAddress(random)
 
     // act
-    val bn = address.buildingNumber.generate()
+    val bn = UnitedStatesAddress.buildingNumber.generate(random)
 
     // assert
     bn shouldBeExactly 12
@@ -20,10 +19,9 @@ class UnitedStatesAddressTest : DescribeSpec({
   it("Can generate a community with prefix and suffix") {
     // arrange
     val random = Random(9001)
-    val address = UnitedStatesAddress(random)
 
     // act
-    val community = address.community.generate()
+    val community = UnitedStatesAddress.community.generate(random)
 
     // assert
     community shouldBe "Autumn Heights"
@@ -31,11 +29,10 @@ class UnitedStatesAddressTest : DescribeSpec({
   it("Can generate a secondary address") {
     // arrange
     val random = Random(1337)
-    val address = UnitedStatesAddress(random)
 
     // act
-    val secondary = address.secondaryAddress.generate()
-    val anotherSecondary = address.secondaryAddress.generate()
+    val secondary = UnitedStatesAddress.secondaryAddress.generate(random)
+    val anotherSecondary = UnitedStatesAddress.secondaryAddress.generate(random)
 
     // assert
     secondary shouldBe "Suite 059"
@@ -44,10 +41,9 @@ class UnitedStatesAddressTest : DescribeSpec({
   it("Can generate a post code") {
     // arrange
     val random = Random(1337)
-    val address = UnitedStatesAddress(random)
 
     // act
-    val postcode = address.postcode.generate()
+    val postcode = UnitedStatesAddress.postcode.generate(random)
 
     // assert
     postcode shouldBe "50591"
@@ -55,10 +51,9 @@ class UnitedStatesAddressTest : DescribeSpec({
   it("Can generate a local post code") {
     // arrange
     val random = Random(420)
-    val address = UnitedStatesAddress(random)
 
     // act
-    val postcode = address.postCodeWithLocal.generate()
+    val postcode = UnitedStatesAddress.postCodeWithLocal.generate(random)
 
     // assert
     postcode shouldBe "31823-9165"
@@ -66,11 +61,10 @@ class UnitedStatesAddressTest : DescribeSpec({
   it("Can retrieve post code by state") {
     // arrange
     val random = Random(42)
-    val address = UnitedStatesAddress(random)
 
     // act
-    val postcode = address.postcodeByState("MD").generate()
-    val localPostcode = address.postcodeByState("MD", true).generate()
+    val postcode = UnitedStatesAddress.postcodeByState("MD").generate(random)
+    val localPostcode = UnitedStatesAddress.postcodeByState("MD", true).generate(random)
 
     // assert
     postcode shouldBe "21030"
@@ -79,10 +73,9 @@ class UnitedStatesAddressTest : DescribeSpec({
   it("Can generate a state") {
     // arrange
     val random = Random(42)
-    val address = UnitedStatesAddress(random)
 
     // act
-    val state = address.state.generate()
+    val state = UnitedStatesAddress.state.generate(random)
 
     // assert
     state shouldBe "North Dakota"
@@ -90,10 +83,9 @@ class UnitedStatesAddressTest : DescribeSpec({
   it("Can generate a state code") {
     // arrange
     val random = Random(123)
-    val address = UnitedStatesAddress(random)
 
     // act
-    val stateCode = address.stateCode.generate()
+    val stateCode = UnitedStatesAddress.stateCode.generate(random)
 
     // assert
     stateCode shouldBe "CT"
@@ -101,11 +93,10 @@ class UnitedStatesAddressTest : DescribeSpec({
   it("Can generate an appropriate post code from a generated state code") {
     // arrange
     val random = Random(452)
-    val address = UnitedStatesAddress(random)
 
     // act
-    val stateCode = address.stateCode.generate()
-    val postalCode = address.postcodeByState(stateCode, true).generate()
+    val stateCode = UnitedStatesAddress.stateCode.generate(random)
+    val postalCode = UnitedStatesAddress.postcodeByState(stateCode, true).generate(random)
 
     // assert
     stateCode shouldBe "AL"
@@ -114,11 +105,10 @@ class UnitedStatesAddressTest : DescribeSpec({
   it("Can generate a city name") {
     // arrange
     val random = Random(42)
-    val address = UnitedStatesAddress(random)
 
     // act
-    val city = address.city.generate()
-    val otherCity = address.city.generate()
+    val city = UnitedStatesAddress.city.generate(random)
+    val otherCity = UnitedStatesAddress.city.generate(random)
 
     // assert
     city shouldBe "Quinnshire"
@@ -127,10 +117,9 @@ class UnitedStatesAddressTest : DescribeSpec({
   it("Can generate a street name") {
     // arrange
     val random = Random(1337)
-    val address = UnitedStatesAddress(random)
 
     // act
-    val street = address.streetName.generate()
+    val street = UnitedStatesAddress.streetName.generate(random)
 
     // assert
     street shouldBe "New Hickle Track"
@@ -138,10 +127,9 @@ class UnitedStatesAddressTest : DescribeSpec({
   it("Can generate a street address") {
     // arrange
     val random = Random(42)
-    val address = UnitedStatesAddress(random)
 
     // act
-    val street = address.streetAddress.generate()
+    val street = UnitedStatesAddress.streetAddress.generate(random)
 
     // assert
     street shouldBe "12 Gray Knolls"
@@ -149,10 +137,9 @@ class UnitedStatesAddressTest : DescribeSpec({
   it("Can generate a full address") {
     // arrange
     val random = Random(1337)
-    val address = UnitedStatesAddress(random)
 
     // act
-    val fullAddress = address.fullAddress.generate()
+    val fullAddress = UnitedStatesAddress.fullAddress.generate(random)
 
     // assert
     fullAddress shouldBe "5914 East Hanh Street, Suite 004, New Wintheiserberg, VT 05029"

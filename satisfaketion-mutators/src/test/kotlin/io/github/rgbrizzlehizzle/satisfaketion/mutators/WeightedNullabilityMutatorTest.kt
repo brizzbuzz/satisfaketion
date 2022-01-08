@@ -1,7 +1,7 @@
 package io.github.rgbrizzlehizzle.satisfaketion.mutators
 
+import io.github.rgbrizzlehizzle.satisfaketion.core.Extensions.mutate
 import io.github.rgbrizzlehizzle.satisfaketion.core.Generator
-import io.github.rgbrizzlehizzle.satisfaketion.core.mutate
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.shouldBe
@@ -16,7 +16,7 @@ class WeightedNullabilityMutatorTest : DescribeSpec({
 
     // act
     val mutated = generator.mutate(WeightedNullabilityMutator(0.5, random))
-    val results = IntRange(0, 100).map { mutated.generate() }
+    val results = IntRange(0, 100).map { mutated.generate(random) }
 
     // assert
     results.filterNotNull().count() shouldBeExactly 47
@@ -28,7 +28,7 @@ class WeightedNullabilityMutatorTest : DescribeSpec({
 
     // act
     val mutated = generator.mutate(WeightedNullabilityMutator(0.1, random))
-    val results = IntRange(0, 100).map { mutated.generate() }
+    val results = IntRange(0, 100).map { mutated.generate(random) }
 
     // assert
     results.filterNotNull().count() shouldBeExactly 7

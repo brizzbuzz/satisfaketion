@@ -14,7 +14,7 @@ class WeightedNullabilityMutator<T : Any>(
   }
 
   override fun mutate(generator: Generator<T>): Generator<T?> = Generator {
-    val baseResult = generator.generate()
+    val baseResult = generator.generate(random)
     val picker = (random.nextInt(MAX_WEIGHT).toDouble()) / MAX_WEIGHT
     when (weight > picker) {
       false -> null

@@ -18,9 +18,9 @@ class Satisfaketion(
     register(clazz, builder)
   }
 
-  inline fun <reified T : Any> generate(): T {
+  inline fun <reified T : Any> generate(random: Random = Random.Default): T {
     val faker = fakes[T::class] ?: error("No registered faker for ${T::class}")
-    return faker.generate() as T
+    return faker.generate(random) as T
   }
 }
 
