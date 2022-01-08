@@ -1,16 +1,21 @@
 package io.github.unredundant.satisfaketion.core
 
+import io.github.unredundant.satisfaketion.core.Extensions.letterify
 import io.github.unredundant.satisfaketion.core.util.AnotherSimpleClass
 import io.github.unredundant.satisfaketion.core.util.SimpleDataClass
 import io.github.unredundant.satisfaketion.core.util.SmolIntGenerator
 import io.github.unredundant.satisfaketion.core.util.TestPhoneGenerator
+import io.github.unredundant.satisfaketion.core.util.TimingStuff
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
 import io.kotest.matchers.ints.shouldBeLessThanOrEqual
+import io.kotest.matchers.kotlinx.datetime.shouldBeBefore
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldMatch
 import io.kotest.matchers.string.shouldStartWith
+import kotlinx.datetime.LocalDateTime
 import org.junit.jupiter.api.assertThrows
 
 class FakerTest : DescribeSpec({
@@ -93,6 +98,74 @@ class FakerTest : DescribeSpec({
       result shouldNotBe null
       result.c shouldBe true
       result.d shouldNotBe "hey dude"
+    }
+  }
+  describe("Correlated Generators") {
+    it("Can perform a simple correlation") {
+      // arrange
+      val fake = Faker<SimpleDataClass> {
+        SimpleDataClass::a { Generator { r -> "?".repeat(r.nextInt(100)).letterify(r) } }
+        SimpleDataClass::b {
+          CorrelatedPropertyGenerator(SimpleDataClass::a) { i, _ ->
+            i.length
+          }
+        }
+      }
+
+      // act
+      val result = fake.generate()
+
+      // assert
+      result.b shouldBeExactly result.a.length
+    }
+    it("Can nest multiple correlations") {
+      // arrange
+      val fake = Faker<TimingStuff> {
+        TimingStuff::start {
+          Generator { r ->
+            LocalDateTime(
+              year = r.nextInt(1995, 2022),
+              monthNumber = r.nextInt(1, 12),
+              dayOfMonth = r.nextInt(1, 28),
+              hour = r.nextInt(1, 23),
+              minute = r.nextInt(1, 59)
+            )
+          }
+        }
+        TimingStuff::end {
+          CorrelatedPropertyGenerator(TimingStuff::start) { start, seed ->
+            LocalDateTime(
+              year = start.year.plus(seed.nextInt(5, 25)),
+              monthNumber = seed.nextInt(1, 12),
+              dayOfMonth = seed.nextInt(1, 28),
+              hour = seed.nextInt(1, 23),
+              minute = seed.nextInt(1, 59)
+            )
+          }
+        }
+        TimingStuff::middle {
+          CorrelatedPropertyGenerator(TimingStuff::start) { start, seed ->
+            CorrelatedPropertyGenerator(TimingStuff::end) { end, _ ->
+              LocalDateTime(
+                year = seed.nextInt(start.year + 1, end.year - 1),
+                monthNumber = seed.nextInt(1, 12),
+                dayOfMonth = seed.nextInt(1, 28),
+                hour = seed.nextInt(1, 23),
+                minute = seed.nextInt(1, 59)
+              )
+            }.generate(seed)
+          }
+        }
+      }
+
+      (0..1000).forEach { _ ->
+        // act
+        val result = fake.generate()
+
+        // assert
+        result.start shouldBeBefore result.middle
+        result.middle shouldBeBefore result.end
+      }
     }
   }
 })
