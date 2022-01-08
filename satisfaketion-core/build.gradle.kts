@@ -3,9 +3,23 @@ plugins {
 }
 
 dependencies {
-  implementation(libs.kotlin.reflect)
-  testImplementation(libs.bundles.test)
-  testImplementation(group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.3.1")
-  testImplementation("io.kotest:kotest-assertions-kotlinx-time-jvm:4.4.3")
-  detektPlugins(libs.detekt.formatting)
+  implementation(group = "org.jetbrains.kotlin", name = "kotlin-reflect", version = "1.6.0")
+  detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.19.0")
+}
+
+testing {
+  suites {
+    val test by getting(JvmTestSuite::class) {
+      useJUnitJupiter()
+      dependencies {
+        // Kotest
+        implementation("io.kotest:kotest-runner-junit5-jvm:5.0.3")
+        implementation("io.kotest:kotest-assertions-core-jvm:5.0.3")
+        implementation("io.kotest:kotest-assertions-kotlinx-time-jvm:4.4.3")
+
+        // Date/Time
+        implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.1")
+      }
+    }
+  }
 }
