@@ -2,6 +2,8 @@ name: Publish to GitHub Packages
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - dokka/**
 env:
   ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SONATYPE_SIGNING_KEY }}
   ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SONATYPE_SIGNING_PASSWORD }}
