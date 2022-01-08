@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Moved to Sourdough gradle plugin
 - Generator now takes seed as parameter
+- Package name update
 
 ## [0.4.2] - August 30th, 2021
 
