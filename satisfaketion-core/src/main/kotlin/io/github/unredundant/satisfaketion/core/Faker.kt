@@ -41,10 +41,29 @@ class Faker<T : Any>(private val clazz: KClass<T>) {
     propertyMap = propertyMap.plus(param to generator)
   }
 
-  inner class CorrelatedPropertyGenerator<R, RR>(
-    private val prop: KProperty1<T, R>,
-    val invoke: (R, Random) -> RR,
-  ) : Generator<RR> {
+  inner class CorrelatedPropertyGenerator<R, RR> : Generator<RR> {
+
+    private var prop: KProperty1<T, R>
+    private var invoke: (R, Random) -> RR
+
+    constructor(
+      prop: KProperty1<T, R>,
+      invoke: (R) -> Generator<RR>
+    ) {
+      this.prop = prop
+      this.invoke = { v, seed ->
+        invoke(v).generate(seed)
+      }
+    }
+
+    constructor(
+      prop: KProperty1<T, R>,
+      invoke: (R, Random) -> RR,
+    ) {
+      this.prop = prop
+      this.invoke = invoke
+    }
+
     override fun generate(seed: Random): RR {
       val param = clazz.primaryConstructor?.parameters?.find { it.name == prop.name }
         ?: error("Unable to match ${prop.name} to a parameter for $clazz")

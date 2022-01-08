@@ -144,8 +144,8 @@ class FakerTest : DescribeSpec({
           }
         }
         TimingStuff::middle {
-          CorrelatedPropertyGenerator(TimingStuff::start) { start, seed ->
-            CorrelatedPropertyGenerator(TimingStuff::end) { end, _ ->
+          CorrelatedPropertyGenerator(TimingStuff::start) { start ->
+            CorrelatedPropertyGenerator(TimingStuff::end) { end, seed ->
               LocalDateTime(
                 year = seed.nextInt(start.year + 1, end.year - 1),
                 monthNumber = seed.nextInt(1, 12),
@@ -153,7 +153,7 @@ class FakerTest : DescribeSpec({
                 hour = seed.nextInt(1, 23),
                 minute = seed.nextInt(1, 59)
               )
-            }.generate(seed)
+            }
           }
         }
       }
