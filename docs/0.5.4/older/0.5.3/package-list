@@ -1,0 +1,10 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+module:satisfaketion-core
+io.github.unredundant.satisfaketion.core
+module:satisfaketion-generators
+io.github.unredundant.satisfaketion.generators.common
+io.github.unredundant.satisfaketion.generators.en
+module:satisfaketion-mutators
+io.github.unredundant.satisfaketion.mutators
