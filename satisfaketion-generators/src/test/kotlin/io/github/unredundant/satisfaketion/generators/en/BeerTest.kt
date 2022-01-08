@@ -1,6 +1,6 @@
 package io.github.unredundant.satisfaketion.generators.en
 
-import io.github.unredundant.satisfaketion.core.satisfaketion
+import io.github.unredundant.satisfaketion.core.Faker
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -20,19 +20,17 @@ class BeerTest : DescribeSpec({
   it("Can populate an entire data class") {
     // arrange
     val seed = 555
-    val satisfaketion = satisfaketion {
-      register(DasBeer::class) {
-        DasBeer::brand { Beer.brand }
-        DasBeer::name { Beer.name }
-        DasBeer::hop { Beer.hop }
-        DasBeer::yeast { Beer.yeast }
-        DasBeer::malt { Beer.malt }
-        DasBeer::style { Beer.style }
-      }
+    val faker = Faker<DasBeer> {
+      DasBeer::brand { Beer.brand }
+      DasBeer::name { Beer.name }
+      DasBeer::hop { Beer.hop }
+      DasBeer::yeast { Beer.yeast }
+      DasBeer::malt { Beer.malt }
+      DasBeer::style { Beer.style }
     }
 
     // act
-    val result = satisfaketion.generate<DasBeer>(Random(seed))
+    val result = faker.generate(Random(seed))
 
     // assert
     val expected = DasBeer(
@@ -48,20 +46,18 @@ class BeerTest : DescribeSpec({
   it("Generates different results when called consecutively") {
     // arrange
     val seed = Random(555)
-    val satisfaketion = satisfaketion {
-      register(DasBeer::class) {
-        DasBeer::brand { Beer.brand }
-        DasBeer::name { Beer.name }
-        DasBeer::hop { Beer.hop }
-        DasBeer::yeast { Beer.yeast }
-        DasBeer::malt { Beer.malt }
-        DasBeer::style { Beer.style }
-      }
+    val faker = Faker<DasBeer> {
+      DasBeer::brand { Beer.brand }
+      DasBeer::name { Beer.name }
+      DasBeer::hop { Beer.hop }
+      DasBeer::yeast { Beer.yeast }
+      DasBeer::malt { Beer.malt }
+      DasBeer::style { Beer.style }
     }
 
     // act
-    val resultA = satisfaketion.generate<DasBeer>(seed)
-    val resultB = satisfaketion.generate<DasBeer>(seed)
+    val resultA = faker.generate(seed)
+    val resultB = faker.generate(seed)
 
     // assert
     resultA shouldNotBe resultB
