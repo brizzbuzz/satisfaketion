@@ -37,12 +37,12 @@ subprojects {
 
     configure<SourdoughLibraryExtension> {
       githubOrg.set("unredundant")
-      githubRepo.set("kompendium")
-      libraryName.set("Kompendium")
-      libraryDescription.set("A minimally invasive OpenAPI spec generator for Ktor")
+      githubRepo.set("satisfaketion")
+      libraryName.set("Satisfaketion")
+      libraryDescription.set("A data generator that is as beautiful and powerful as you are ❤️")
       licenseName.set("MIT License")
       licenseUrl.set("https://mit-license.org")
-      developerId.set("bkbnio")
+      developerId.set("unredundant")
       developerName.set("Ryan Brink")
       developerEmail.set("admin@bkbn.io")
     }
