@@ -5,4 +5,3 @@ include("satisfaketion-mutators")
 
 // Feature Previews
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-enableFeaturePreview("VERSION_CATALOGS")
