@@ -2,8 +2,7 @@
 
 A Zero-Dependency Kotlin Faker implementation built to leave you fully satisfied 😏 ... With your fake data
 
-[![codecov](https://codecov.io/gh/rgbrizzlehizzle/satisfaketion/branch/main/graph/badge.svg?token=WG42G5BPLQ)](https://codecov.io/gh/rgbrizzlehizzle/satisfaketion)
-[![version](https://img.shields.io/maven-central/v/io.github.rgbrizzlehizzle/satisfaketion-core?style=flat-square)](https://search.maven.org/search?q=io.github.rgbrizzlehizzle%20satisfaketion)
+[![version](https://img.shields.io/maven-central/v/io.github.unredundant/satisfaketion-core?style=flat-square)](https://search.maven.org/search?q=io.github.unredundant%20satisfaketion)
 
 ## How to Install 🚀
 
@@ -17,23 +16,23 @@ repositories {
 
 dependencies {
   // other (less cool) dependencies
-  testImplementation("io.github.rgbrizzlehizzle:satisfaketion-core:latest")
-  testImplementation("io.github.rgbrizzlehizzle:satisfaketion-generators:latest")
-  testImplementation("io.github.rgbrizzlehizzle:satisfaketion-mutators:latest")
+  testImplementation("io.github.unredundant:satisfaketion-core:latest.release")
+  testImplementation("io.github.unredundant:satisfaketion-generators:latest.release")
+  testImplementation("io.github.unredundant:satisfaketion-mutators:latest.release")
 }
 ```
 
 The last two dependencies are optional, as they are the out-of-the-box generators and mutators that Satisfaketion provides,
 but they are by no means mandatory.  However, if you write an awesome generator or mutator that you think the community 
-would love, please open an issue [here](https://github.com/rgbrizzlehizzle/satisfaketion/issues) to discuss adding it 
+would love, please open an issue [here](https://github.com/unredundant/satisfaketion/issues) to discuss adding it 
 to the repository
 
 If you want to get a little spicy 🤠 every merge of Satisfaketion is published to the GitHub package registry.  Pulling 
 from GitHub is slightly more involved, but such is the price you pay for bleeding edge fake data generation.  
 
 ```kotlin
-// 1 Setup a helper function to import any Github Repository Package
-// This step is optional but I have a bunch of stuff stored on github so I find it useful 😄
+// 1 set up a helper function to import any GitJub Repository Package
+// This step is optional, but I have a bunch of stuff stored on GitHub, so I find it useful 😄
 fun RepositoryHandler.github(packageUrl: String) = maven { 
   name = "GithubPackages"
   url = uri(packageUrl)
@@ -45,12 +44,12 @@ fun RepositoryHandler.github(packageUrl: String) = maven {
 
 // 2 Add the repo in question (in this case Kompendium)
 repositories {
-  github("https://maven.pkg.github.com/rgbrizzlehizzle/satisfaketion")
+  github("https://maven.pkg.github.com/unredundant/satisfaketion")
 }
 
 // 3 Add the package like any normal dependency
 dependencies { 
-  implementation("io.bkbn:satisfaketion-core:latest")
+  implementation("io.bkbn:satisfaketion-core:latest.snapshot")
 }
 
 ```
@@ -84,7 +83,7 @@ A `Generator` is a functional interface that declares a single method `generate`
 
 ```kotlin
 fun interface Generator<R> {
-  fun generate(): R
+  fun generate(seed: Random): R
 }
 ```
 
@@ -92,10 +91,10 @@ An example generator for a naive phone number could be
 
 ```kotlin
 object TestPhoneGenerator : Generator<String> {
-  override fun generate(): String {
-    val first = Random.Default.nextInt(100..999)
-    val second = Random.Default.nextInt(100..999)
-    val third = Random.Default.nextInt(1000..9999)
+  override fun generate(seed: Random = Random.Default): String {
+    val first = random.nextInt(100..999)
+    val second = random.nextInt(100..999)
+    val third = random.nextInt(1000..9999)
     return "$first-$second-$third"
   }
 }
@@ -129,8 +128,8 @@ using the existing `EnglishName` generator, you can declare a satisfaketion inst
 ```kotlin
 val satisfaketion = satisfaketion {
   register(MyPerson::class) {
-    MyPerson::firstName { nameGenerator.firstName }
-    MyPerson::lastName { nameGenerator.lastName }
+    MyPerson::firstName { EnglishName.firstName }
+    MyPerson::lastName { EnglishName.lastName }
     MyPerson::prefix { nameGenerator.prefix.mutate(WeightedNullabilityMutator(0.25, seed)) }
     MyPerson::suffix { nameGenerator.suffix.mutate(WeightedNullabilityMutator(0.25, seed)) }
   }
@@ -150,7 +149,7 @@ The current list of pre-existing generators is
 - Beer
 - Barcodes
 
-If you would like to add a generator, please first open an issue [here](https://github.com/rgbrizzlehizzle/satisfaketion/issues) explaining the use case.
+If you would like to add a generator, please first open an issue [here](https://github.com/unredundant/satisfaketion/issues) explaining the use case.
 
 ### Mutators 🦋
 
