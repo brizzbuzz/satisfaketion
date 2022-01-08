@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.3] - January 8th, 2022
+### Changed
+- Moved docs to docs folder, so I can doc as per the GitHub Docs
+
 ## [0.5.2] - January 8th, 2022
 ### Changed
 - Patch for a bug in the documentation pipeline caused by trying to push to a protected branch
