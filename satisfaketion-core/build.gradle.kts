@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-  implementation(group = "org.jetbrains.kotlin", name = "kotlin-reflect", version = "1.6.0")
+  implementation(group = "org.jetbrains.kotlin", name = "kotlin-reflect", version = "1.6.10")
   detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.19.0")
 }
 
