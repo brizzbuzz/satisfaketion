@@ -1,5 +1,23 @@
 plugins {
-  id("io.bkbn.sourdough.library")
+  kotlin("jvm") version "1.6.10"
+  id("io.bkbn.sourdough.library.jvm") version "0.4.0-SNAPSHOT"
+  id("io.gitlab.arturbosch.detekt") version "1.19.0"
+  id("com.adarshr.test-logger") version "3.1.0"
+  id("org.jetbrains.dokka")
+  id("maven-publish")
+  id("java-library")
+}
+
+sourdough {
+  githubOrg.set("unredundant")
+  githubRepo.set("satisfaketion")
+  libraryName.set("Satisfaketion")
+  libraryDescription.set("A collection of useful Satisfaketion mutators")
+  licenseName.set("MIT License")
+  licenseUrl.set("https://mit-license.org")
+  developerId.set("unredundant")
+  developerName.set("Ryan Brink")
+  developerEmail.set("admin@bkbn.io")
 }
 
 dependencies {
@@ -9,7 +27,7 @@ dependencies {
 
 testing {
   suites {
-    val test by getting(JvmTestSuite::class) {
+    named("test", JvmTestSuite::class) {
       useJUnitJupiter()
       dependencies {
         // Kotest
