@@ -1,7 +1,12 @@
 rootProject.name = "satisfaketion"
-include("satisfaketion-core")
-include("satisfaketion-generators")
-include("satisfaketion-mutators")
+include("core")
+include("core-mpp")
+include("generators")
+include("mutators")
+
+run {
+  rootProject.children.forEach { it.name = "${rootProject.name}-${it.name}" }
+}
 
 // Feature Previews
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
