@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>All modules</title>
+<link href="images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "";</script>    <script>const storage = localStorage.getItem("dokka-dark-mode")
+const savedDarkMode = storage ? JSON.parse(storage) : false
+if(savedDarkMode === true){
+    document.getElementsByTagName("html")[0].classList.add("theme-dark")
+}</script>
+<script type="text/javascript" src="scripts/sourceset_dependencies.js" async></script><link href="styles/style.css" rel="Stylesheet"><link href="styles/jetbrains-mono.css" rel="Stylesheet"><link href="styles/main.css" rel="Stylesheet"><link href="styles/prism.css" rel="Stylesheet"><link href="styles/logo-styles.css" rel="Stylesheet"><script type="text/javascript" src="scripts/clipboard.js" async></script><script type="text/javascript" src="scripts/navigation-loader.js" async></script><script type="text/javascript" src="scripts/platform-content-handler.js" async></script><script type="text/javascript" src="scripts/main.js" defer></script><script type="text/javascript" src="scripts/prism.js" async></script><link href="styles/multimodule.css" rel="Stylesheet">  </head>
+  <body>
+    <div class="navigation-wrapper" id="navigation-wrapper">
+      <div id="leftToggler"><span class="icon-toggler"></span></div>
+      <div class="library-name"><a href="index.html">satisfaketion</a></div>
+      <div><dokka-template-command data="{&quot;@class&quot;:&quot;org.jetbrains.dokka.base.templating.ReplaceVersionsCommand&quot;,&quot;location&quot;:&quot;index.html&quot;}"><div class="versions-dropdown">
+  <div class="versions-dropdown-button">0.6.0</div>
+  <div class="versions-dropdown-data"><a href="../../index.html">0.6.1</a><a href="index.html">0.6.0</a><a href="../0.5.4/index.html">0.5.4</a><a href="../0.5.3/index.html">0.5.3</a></div>
+</div>
+</dokka-template-command></div>
+      <div class="pull-right d-flex"><button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+      </div>
+    </div>
+    <div id="container">
+      <div id="leftColumn">
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div class="main-content" id="content" pageids="satisfaketion::.ext/allModules///PointingToDeclaration//0">
+          <div class="breadcrumbs"></div>
+          <div class="cover ">
+            <div class="cover ">
+              <h1 class="">Some Nitty and Some Gritty</h1>
+              <p class="paragraph">Satisfaketion is broken into three main library modules</p>
+              <ul>
+                <li>
+                  <p class="paragraph">Core</p>
+                </li>
+                <li>
+                  <p class="paragraph">Generators</p>
+                </li>
+                <li>
+                  <p class="paragraph">Mutators</p>
+                </li>
+              </ul>
+              <h1 class=""> Core</h1>
+              <p class="paragraph">The engine that powers Satisfaketion. Instantiating a satisfaketion object is as easy as declaring the helper function.</p>
+              <p class="paragraph">Once a Faker has been instantiated, type-safe generators can be associated with each member of the class.</p>
+              <h2 class=""> Faker</h2>
+              <div class="sample-container">
+                <pre><code class="block lang-kotlin" theme="idea">val satisfaketion = Faker&lt;SimpleDataClass&gt; {<br>  SimpleDataClass::a { TestPhoneGenerator }<br>  SimpleDataClass::b { SmolIntGenerator }<br>}<br><br>val example = faker.generate()</code></pre>
+<span class="top-right-position"><span class="copy-icon"></span>
+                  <div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div>
+                </span></div>
+              <h2 class=""> Generator</h2>
+              <p class="paragraph">A <code class="lang-kotlin">Generator</code> is a functional interface that declares a single method <code class="lang-kotlin">generate</code></p>
+              <div class="sample-container">
+                <pre><code class="block lang-kotlin" theme="idea">fun interface Generator&lt;R&gt; {<br>  fun generate(seed: Random): R<br>}</code></pre>
+<span class="top-right-position"><span class="copy-icon"></span>
+                  <div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div>
+                </span></div>
+              <p class="paragraph">An example generator for a naive phone number could be</p>
+              <div class="sample-container">
+                <pre><code class="block lang-kotlin" theme="idea">object TestPhoneGenerator : Generator&lt;String&gt; {<br>  override fun generate(seed: Random = Random.Default): String {<br>    val first = seed.nextInt(100..999)<br>    val second = seed.nextInt(100..999)<br>    val third = seed.nextInt(1000..9999)<br>    return "$first-$second-$third"<br>  }<br>}</code></pre>
+<span class="top-right-position"><span class="copy-icon"></span>
+                  <div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div>
+                </span></div>
+              <h2 class=""> Mutator</h2>
+              <p class="paragraph">A <code class="lang-kotlin">Mutator</code> is another functional interface</p>
+              <div class="sample-container">
+                <pre><code class="block lang-kotlin" theme="idea">fun interface Mutator&lt;R, RR&gt; {<br>  fun mutate(generator: Generator&lt;R&gt;): Generator&lt;RR&gt;<br>}</code></pre>
+<span class="top-right-position"><span class="copy-icon"></span>
+                  <div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div>
+                </span></div>
+              <p class="paragraph">Mutators allow you to take an existing <code class="lang-kotlin">Generator</code> and mutate it, allowing for expansive reuse of base generators.</p>
+              <p class="paragraph">Let's say you have a data class <code class="lang-kotlin">MyPerson</code></p>
+              <div class="sample-container">
+                <pre><code class="block lang-kotlin" theme="idea">data class MyPerson(<br>  val firstName: String,<br>  val lastName: String,<br>  val prefix: String?,<br>  val suffix: String?,<br>)</code></pre>
+<span class="top-right-position"><span class="copy-icon"></span>
+                  <div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div>
+                </span></div>
+              <p class="paragraph">using the existing <code class="lang-kotlin">EnglishName</code> generators (from the generator module), you can declare a satisfaketion instance, with mutators to add weighted mutability to the <code class="lang-kotlin">prefix</code> and <code class="lang-kotlin">suffix</code> fields</p>
+              <div class="sample-container">
+                <pre><code class="block lang-kotlin" theme="idea">val satisfaketion = satisfaketion {<br>  register(MyPerson::class) {<br>    MyPerson::firstName { EnglishName.firstName }<br>    MyPerson::lastName { EnglishName.lastName }<br>    MyPerson::prefix { EnglishName.prefix.mutate(WeightedNullabilityMutator(0.25, seed)) }<br>    MyPerson::suffix { EnglishName.suffix.mutate(WeightedNullabilityMutator(0.25, seed)) }<br>  }<br>}</code></pre>
+<span class="top-right-position"><span class="copy-icon"></span>
+                  <div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div>
+                </span></div>
+              <p class="paragraph">This would cause approximately 25% of generated objects to have a null field for <code class="lang-kotlin">prefix</code> and/or <code class="lang-kotlin">suffix</code></p>
+              <h1 class=""> Modules</h1>
+              <p class="paragraph">Details on each of the modules can be found below 👇</p>
+            </div>
+            <h2 class="">All modules:</h2>
+            <div class="table"></div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2022 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  
+</body></html>
+
+
