@@ -3,7 +3,7 @@ plugins {
   kotlin("multiplatform") version "1.6.10" apply false
   id("io.bkbn.sourdough.root") version "0.5.2"
   id("com.github.jakemarsden.git-hooks") version "0.0.2"
-  id("org.jetbrains.dokka") version "1.6.0"
+  id("org.jetbrains.dokka") version "1.6.10"
   id("org.jetbrains.kotlinx.kover") version "0.5.0-RC"
   id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 }
