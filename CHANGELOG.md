@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.4] - January 11th, 2022
+### Changed
+- Fixed bug where library version was null
+- Fixed bug where doc modules were missing
+
 ## [0.6.3] - January 11th, 2022
 ### Changed
 - Documentation Generation Pipeline now requires publishing to succeed
