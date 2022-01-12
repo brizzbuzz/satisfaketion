@@ -1,6 +1,6 @@
 plugins {
   kotlin("jvm")
-  id("io.bkbn.sourdough.library.jvm") version "0.5.2"
+  id("io.bkbn.sourdough.library.jvm") version "0.5.3"
   id("io.gitlab.arturbosch.detekt") version "1.19.0"
   id("com.adarshr.test-logger") version "3.1.0"
   id("org.jetbrains.dokka")
