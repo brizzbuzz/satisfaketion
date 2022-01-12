@@ -37,7 +37,7 @@ testing {
         implementation("io.kotest:kotest-assertions-kotlinx-time-jvm:4.4.3")
 
         // Date/Time
-        implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.1")
+        implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
       }
     }
   }
