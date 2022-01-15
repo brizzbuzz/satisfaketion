@@ -25,7 +25,7 @@ sourdough {
 dependencies {
   api(projects.satisfaketionCore)
   implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.3.2")
-  implementation(group = "com.charleskorn.kaml", name = "kaml", version = "0.39.0")
+  implementation(group = "com.charleskorn.kaml", name = "kaml", version = "0.39.1")
   detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.19.0")
 }
 
