@@ -1,12 +1,13 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-  kotlin("jvm")
-  id("io.bkbn.sourdough.library.jvm") version "0.5.6"
+  kotlin("multiplatform")
+  id("io.bkbn.sourdough.library.mpp") version "0.5.6"
   id("io.gitlab.arturbosch.detekt") version "1.19.0"
   id("com.adarshr.test-logger") version "3.1.0"
   id("org.jetbrains.dokka")
-  id("maven-publish")
-  id("java-library")
-  id("signing")
+  id("io.kotest.multiplatform") version "5.0.3"
+//  id("maven-publish")
 }
 
 sourdough {
@@ -22,23 +23,40 @@ sourdough {
 }
 
 dependencies {
-  implementation(group = "org.jetbrains.kotlin", name = "kotlin-reflect", version = "1.6.10")
   detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.19.0")
 }
+repositories {
+  mavenCentral()
+}
 
-testing {
-  suites {
-    named("test", JvmTestSuite::class) {
-      useJUnitJupiter()
+kotlin {
+  sourceSets {
+    val commonMain by getting {
       dependencies {
-        // Kotest
-        implementation("io.kotest:kotest-runner-junit5-jvm:5.1.0")
-        implementation("io.kotest:kotest-assertions-core-jvm:5.1.0")
-        implementation("io.kotest:kotest-assertions-kotlinx-time-jvm:4.4.3")
-
-        // Date/Time
-        implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
+        implementation(kotlin("stdlib"))
       }
     }
+    val commonTest by getting {
+      dependencies {
+
+      }
+    }
+    val jvmMain by getting {
+      dependencies {
+        implementation(kotlin("stdlib"))
+        implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.10")
+      }
+    }
+    val jvmTest by getting {
+      dependencies {
+        implementation("io.kotest:kotest-runner-junit5-jvm:5.0.3")
+        implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
+        implementation("io.kotest:kotest-assertions-kotlinx-time-jvm:4.4.3")
+      }
+    }
+    val jsMain by getting
+    val jsTest by getting
+    val nativeMain by getting
+    val nativeTest by getting
   }
 }

@@ -23,7 +23,11 @@ sourdough {
 
 dependencies {
   api(projects.satisfaketionCore)
-  detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.19.0")
+    implementation("io.kotest:kotest-assertions-kotlinx-time-jvm:4.4.3")
+    detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.19.0")
+}
+repositories {
+  mavenCentral()
 }
 
 testing {

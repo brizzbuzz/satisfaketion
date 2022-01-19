@@ -1,6 +1,5 @@
 rootProject.name = "satisfaketion"
 include("core")
-include("core-mpp")
 include("generators")
 include("mutators")
 

@@ -26,7 +26,11 @@ dependencies {
   api(projects.satisfaketionCore)
   implementation(group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.3.2")
   implementation(group = "com.charleskorn.kaml", name = "kaml", version = "0.40.0")
-  detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.19.0")
+    implementation("io.kotest:kotest-assertions-kotlinx-time-jvm:4.4.3")
+    detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.19.0")
+}
+repositories {
+  mavenCentral()
 }
 
 testing {
