@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - January 19th, 2022
+### Changed
+- Dropped legacy core module
+- Migrated JVM implementation to mpp module
+- Promoted core-mpp to core
+
 ## [0.6.4] - January 11th, 2022
 ### Changed
 - Fixed bug where library version was null

@@ -28,6 +28,9 @@ dependencies {
   implementation(group = "com.charleskorn.kaml", name = "kaml", version = "0.40.0")
   detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.19.0")
 }
+repositories {
+  mavenCentral()
+}
 
 testing {
   suites {
