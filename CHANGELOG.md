@@ -6,10 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.7.0] - February 12th, 2022
 ### Changed
-- Dropped legacy core module
-- Migrated JVM implementation to mpp module
-- Promoted core-mpp to core
+- Core module is now multiplatform (Faker implementation on JVM only)
 - Generator module is now multiplatform
+- Mutator module is now multiplatform
 - Dropped Kaml and converted all yaml files to json to enable mpp support
 
 ## [0.6.4] - January 11th, 2022
