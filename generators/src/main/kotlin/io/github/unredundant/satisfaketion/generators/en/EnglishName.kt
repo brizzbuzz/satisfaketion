@@ -1,12 +1,12 @@
 package io.github.unredundant.satisfaketion.generators.en
 
-import com.charleskorn.kaml.Yaml
 import io.github.unredundant.satisfaketion.core.Extensions.nextItem
 import io.github.unredundant.satisfaketion.core.Generator
 import io.github.unredundant.satisfaketion.generators.common.Name
 import io.github.unredundant.satisfaketion.generators.common.Utils
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 object EnglishName : Name {
 
@@ -20,8 +20,8 @@ object EnglishName : Name {
     val suffixes: List<String>
   )
 
-  private val yaml = Utils.getFile("english_names.yaml")
-  private val metadata = Yaml.default.decodeFromString<EnglishNameMetadata>(yaml)
+  private val json = Utils.getFile("english_names.json")
+  private val metadata = Json.decodeFromString<EnglishNameMetadata>(json)
 
   override val maleFirstName: Generator<String> = Generator { r -> metadata.maleFirstNames.nextItem(r) }
   override val femaleFirstName: Generator<String> = Generator { r -> metadata.femaleFirstNames.nextItem(r) }

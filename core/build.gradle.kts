@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
   kotlin("multiplatform")
   id("io.bkbn.sourdough.library.mpp") version "0.6.0"
@@ -27,9 +25,6 @@ sourdough {
 dependencies {
   detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.19.0")
 }
-repositories {
-  mavenCentral()
-}
 
 kotlin {
   sourceSets {
@@ -38,11 +33,7 @@ kotlin {
         implementation(kotlin("stdlib"))
       }
     }
-    val commonTest by getting {
-      dependencies {
-
-      }
-    }
+    val commonTest by getting
     val jvmMain by getting {
       dependencies {
         implementation(kotlin("stdlib"))

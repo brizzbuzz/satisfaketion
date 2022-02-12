@@ -1,275 +1,36 @@
 package io.github.unredundant.satisfaketion.generators.en
 
+import io.github.unredundant.satisfaketion.core.Extensions.nextItem
 import io.github.unredundant.satisfaketion.core.Generator
+import io.github.unredundant.satisfaketion.generators.common.Utils
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 object Beer {
 
-  val brand = Generator { r ->
-    val index = r.nextInt(brands.size)
-    brands[index]
-  }
-
-  val name = Generator { r ->
-    val index = r.nextInt(names.size)
-    names[index]
-  }
-
-  val hop = Generator { r ->
-    val index = r.nextInt(hops.size)
-    hops[index]
-  }
-
-  val yeast = Generator { r ->
-    val index = r.nextInt(yeasts.size)
-    yeasts[index]
-  }
-
-  val malt = Generator { r ->
-    val index = r.nextInt(malts.size)
-    malts[index]
-  }
-
-  val style = Generator { r ->
-    val index = r.nextInt(styles.size)
-    styles[index]
-  }
-
-  private val brands = listOf(
-    "Corona Extra",
-    "Heineken",
-    "Budweiser",
-    "Becks",
-    "BudLight",
-    "Pabst Blue Ribbon",
-    "Dos Equis",
-    "Blue Moon",
-    "Stella Artois",
-    "Miller Draft",
-    "Coors lite",
-    "Amstel",
-    "Guinness",
-    "Kirin",
-    "Tsingtao",
-    "Sierra Nevada",
-    "Rolling Rock",
-    "Red Stripe",
-    "Paulaner",
-    "Patagonia",
-    "Delirium",
-    "Samuel Adams",
-    "Sapporo",
-    "Carlsberg",
-    "Pacifico",
-    "Quimes",
-    "Murphys",
-    "Birra Moretti",
-    "Harp",
-    "Fosters",
-    "Hoegaarden",
-    "Leffe",
-    "Lowenbrau"
+  @Serializable
+  data class BeerMetadata(
+    val brands: List<String>,
+    val names: List<String>,
+    val hops: List<String>,
+    val yeasts: List<String>,
+    val malts: List<String>,
+    val styles: List<String>,
   )
-  private val names = listOf(
-    "Pliny The Elder",
-    "Founders Kentucky Breakfast",
-    "Trappistes Rochefort 10",
-    "HopSlam Ale",
-    "Stone Imperial Russian Stout",
-    "St. Bernardus Abt 12",
-    "Founders Breakfast Stout",
-    "Weihenstephaner Hefeweissbier",
-    "Péché Mortel",
-    "Celebrator Doppelbock",
-    "Duvel",
-    "Dreadnaught IPA",
-    "Nugget Nectar",
-    "La Fin Du Monde",
-    "Bourbon County Stout",
-    "Old Rasputin Russian Imperial Stout",
-    "Two Hearted Ale",
-    "Ruination IPA",
-    "Schneider Aventinus",
-    "Double Bastard Ale",
-    "90 Minute IPA",
-    "Hop Rod Rye",
-    "Trappistes Rochefort 8",
-    "Chimay Grande Réserve",
-    "Stone IPA",
-    "Arrogant Bastard Ale",
-    "Edmund Fitzgerald Porter",
-    "Chocolate St",
-    "Oak Aged Yeti Imperial Stout",
-    "Ten FIDY",
-    "Storm King Stout",
-    "Shakespeare Oatmeal",
-    "Alpha King Pale Ale",
-    "Westmalle Trappist Tripel",
-    "Samuel Smith’s Imperial IPA",
-    "Yeti Imperial Stout",
-    "Hennepin",
-    "Samuel Smith’s Oatmeal Stout",
-    "Brooklyn Black",
-    "Oaked Arrogant Bastard Ale",
-    "Sublimely Self-Righteous Ale",
-    "Trois Pistoles",
-    "Bell’s Expedition",
-    "Sierra Nevada Celebration Ale",
-    "Sierra Nevada Bigfoot Barleywine Style Ale",
-    "Racer 5 India Pale Ale, Bear Republic Bre",
-    "Orval Trappist Ale",
-    "Hercules Double IPA",
-    "Maharaj",
-    "Maudite",
-    "Kirin Inchiban",
-    "Delirium Tremens",
-    "Delirium Noctorum",
-    "Sapporo Premium"
-  )
-  private val hops = listOf(
-    "Ahtanum",
-    "Amarillo",
-    "Bitter Gold",
-    "Bravo",
-    "Brewer’s Gold",
-    "Bullion",
-    "Cascade",
-    "Cashmere",
-    "Centennial",
-    "Chelan",
-    "Chinook",
-    "Citra",
-    "Cluster",
-    "Columbia",
-    "Columbus",
-    "Comet",
-    "Crystal",
-    "Equinox",
-    "Eroica",
-    "Fuggle",
-    "Galena",
-    "Glacier",
-    "Golding",
-    "Hallertau",
-    "Horizon",
-    "Liberty",
-    "Magnum",
-    "Millennium",
-    "Mosaic",
-    "Mt. Hood",
-    "Mt. Rainier",
-    "Newport",
-    "Northern Brewer",
-    "Nugget",
-    "Olympic",
-    "Palisade",
-    "Perle",
-    "Saaz",
-    "Santiam",
-    "Simcoe",
-    "Sorachi Ace",
-    "Sterling",
-    "Summit",
-    "Tahoma",
-    "Tettnang",
-    "TriplePearl",
-    "Ultra",
-    "Vanguard",
-    "Warrior",
-    "Willamette",
-    "Yakima Gol"
-  )
-  private val yeasts = listOf(
-    "1007 - German Ale",
-    "1010 - American Wheat",
-    "1028 - London Ale",
-    "1056 - American Ale",
-    "1084 - Irish Ale",
-    "1098 - British Ale",
-    "1099 - Whitbread Ale",
-    "1187 - Ringwood Ale",
-    "1272 - American Ale II",
-    "1275 - Thames Valley Ale",
-    "1318 - London Ale III",
-    "1332 - Northwest Ale",
-    "1335 - British Ale II",
-    "1450 - Dennys Favorite 50",
-    "1469 - West Yorkshire Ale",
-    "1728 - Scottish Ale",
-    "1968 - London ESB Ale",
-    "2565 - Kölsch",
-    "1214 - Belgian Abbey",
-    "1388 - Belgian Strong Ale",
-    "1762 - Belgian Abbey II",
-    "3056 - Bavarian Wheat Blend",
-    "3068 - Weihenstephan Weizen",
-    "3278 - Belgian Lambic Blend",
-    "3333 - German Wheat",
-    "3463 - Forbidden Fruit",
-    "3522 - Belgian Ardennes",
-    "3638 - Bavarian Wheat",
-    "3711 - French Saison",
-    "3724 - Belgian Saison",
-    "3763 - Roeselare Ale Blend",
-    "3787 - Trappist High Gravity",
-    "3942 - Belgian Wheat",
-    "3944 - Belgian Witbier",
-    "2000 - Budvar Lager",
-    "2001 - Urquell Lager",
-    "2007 - Pilsen Lager",
-    "2035 - American Lager",
-    "2042 - Danish Lager",
-    "2112 - California Lager",
-    "2124 - Bohemian Lager",
-    "2206 - Bavarian Lager",
-    "2278 - Czech Pils",
-    "2308 - Munich Lager",
-    "2633 - Octoberfest Lager Blend",
-    "5112 - Brettanomyces bruxellensis",
-    "5335 - Lactobacillus",
-    "5526 - Brettanomyces lambicus",
-    "5733 - Pediococcus"
-  )
-  private val malts = listOf(
-    "Black malt",
-    "Caramel",
-    "Carapils",
-    "Chocolate",
-    "Munich",
-    "Caramel",
-    "Carapils",
-    "Chocolate malt",
-    "Munich",
-    "Pale",
-    "Roasted barley",
-    "Rye malt",
-    "Special roast",
-    "Victory",
-    "Vienna",
-    "Wheat mal"
-  )
-  private val styles = listOf(
-    "Light Lager",
-    "Pilsner",
-    "European Amber Lager",
-    "Dark Lager",
-    "Bock",
-    "Light Hybrid Beer",
-    "Amber Hybrid Beer",
-    "English Pale Ale",
-    "Scottish And Irish Ale",
-    "Merican Ale",
-    "English Brown Ale",
-    "Porter",
-    "Stout",
-    "India Pale Ale",
-    "German Wheat And Rye Beer",
-    "Belgian And French Ale",
-    "Sour Ale",
-    "Belgian Strong Ale",
-    "Strong Ale",
-    "Fruit Beer",
-    "Vegetable Beer",
-    "Smoke-flavored",
-    "Wood-aged Beer"
-  )
+
+  private val json = Utils.getFile("beer.json")
+  private val metadata = Json.decodeFromString<BeerMetadata>(json)
+
+  val brand = Generator { r -> metadata.brands.nextItem(r) }
+
+  val name = Generator { r -> metadata.names.nextItem(r) }
+
+  val hop = Generator { r -> metadata.hops.nextItem(r) }
+
+  val yeast = Generator { r -> metadata.yeasts.nextItem(r) }
+
+  val malt = Generator { r -> metadata.malts.nextItem(r) }
+
+  val style = Generator { r -> metadata.styles.nextItem(r) }
 }

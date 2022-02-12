@@ -1,6 +1,5 @@
 package io.github.unredundant.satisfaketion.generators.en
 
-import com.charleskorn.kaml.Yaml
 import io.github.unredundant.satisfaketion.core.Extensions.nextItem
 import io.github.unredundant.satisfaketion.core.Extensions.numerify
 import io.github.unredundant.satisfaketion.core.Generator
@@ -9,6 +8,7 @@ import io.github.unredundant.satisfaketion.generators.common.Utils
 import kotlin.random.Random
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 object UnitedStatesAddress : Address {
 
@@ -24,8 +24,8 @@ object UnitedStatesAddress : Address {
     val stateCodes: List<String>
   )
 
-  private val yaml = Utils.getFile("united_states_address.yaml")
-  private val metadata = Yaml.default.decodeFromString<UnitedStatesAddressMetadata>(yaml)
+  private val json = Utils.getFile("united_states_address.json")
+  private val metadata = Json.decodeFromString<UnitedStatesAddressMetadata>(json)
 
   override val name: String = "United States"
   override val code: String = "USA"
