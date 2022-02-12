@@ -1,6 +1,8 @@
 plugins {
-  kotlin("jvm")
-  id("io.bkbn.sourdough.library.jvm") version "0.6.0"
+  kotlin("multiplatform")
+  kotlin("plugin.serialization") version "1.6.10"
+  id("io.kotest.multiplatform") version "5.1.0"
+  id("io.bkbn.sourdough.library.mpp") version "0.6.0"
   id("io.gitlab.arturbosch.detekt") version "1.19.0"
   id("com.adarshr.test-logger") version "3.1.0"
   id("org.jetbrains.dokka")
@@ -22,22 +24,34 @@ sourdough {
 }
 
 dependencies {
-  api(projects.satisfaketionCore)
   detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.19.0")
 }
-repositories {
-  mavenCentral()
-}
 
-testing {
-  suites {
-    named("test", JvmTestSuite::class) {
-      useJUnitJupiter()
+kotlin {
+  sourceSets {
+    val commonMain by getting {
+      resources.srcDirs("resources")
       dependencies {
-        // Kotest
-        implementation("io.kotest:kotest-runner-junit5-jvm:5.1.0")
-        implementation("io.kotest:kotest-assertions-core-jvm:5.1.0")
+        implementation(kotlin("stdlib"))
+        implementation(projects.satisfaketionCore)
+        implementation("co.touchlab:kermit:1.0.3")
       }
     }
+    val commonTest by getting {
+      dependencies {
+        implementation("io.kotest:kotest-assertions-core:5.0.3")
+        implementation("io.kotest:kotest-framework-engine:5.0.3")
+      }
+    }
+    val jvmMain by getting {
+      dependencies {
+        implementation("io.kotest:kotest-runner-junit5-jvm:5.0.3")
+      }
+    }
+    val jvmTest by getting
+    val jsMain by getting
+    val jsTest by getting
+    val nativeMain by getting
+    val nativeTest by getting
   }
 }
