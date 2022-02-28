@@ -3,7 +3,7 @@ plugins {
   id("io.bkbn.sourdough.library.mpp") version "0.6.0"
   id("io.kotest.multiplatform") version "5.1.0"
   id("io.gitlab.arturbosch.detekt") version "1.19.0"
-  id("com.adarshr.test-logger") version "3.1.0"
+  id("com.adarshr.test-logger") version "3.2.0"
   id("org.jetbrains.dokka")
   id("maven-publish")
   id("java-library")
