@@ -40,7 +40,7 @@ kotlin {
     val commonTest by getting {
       dependencies {
         implementation("io.kotest:kotest-assertions-core:5.2.0")
-        implementation("io.kotest:kotest-framework-engine:5.2.0")
+        implementation("io.kotest:kotest-framework-engine:5.2.1")
       }
     }
     val jvmMain by getting {
