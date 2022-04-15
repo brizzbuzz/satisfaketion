@@ -23,7 +23,7 @@ sourdough {
 }
 
 dependencies {
-  detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.19.0")
+  detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.20.0")
 }
 
 kotlin {
