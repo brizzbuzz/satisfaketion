@@ -1,6 +1,6 @@
 plugins {
   kotlin("multiplatform")
-  kotlin("plugin.serialization") version "1.6.20"
+  kotlin("plugin.serialization") version "1.6.21"
   id("io.kotest.multiplatform") version "5.2.3"
   id("io.bkbn.sourdough.library.mpp") version "0.6.0"
   id("io.gitlab.arturbosch.detekt") version "1.20.0"
