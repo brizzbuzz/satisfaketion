@@ -34,7 +34,7 @@ kotlin {
       dependencies {
         implementation(kotlin("stdlib"))
         implementation(projects.satisfaketionCore)
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
         implementation("com.squareup.okio:okio:3.1.0")
         implementation("co.touchlab:kermit:1.1.1")
       }
