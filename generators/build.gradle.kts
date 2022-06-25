@@ -48,7 +48,7 @@ kotlin {
     val jvmMain by getting {
       resources.srcDirs("resources")
       dependencies {
-        implementation("io.kotest:kotest-runner-junit5-jvm:5.3.1")
+        implementation("io.kotest:kotest-runner-junit5-jvm:5.3.2")
       }
     }
     val jvmTest by getting
