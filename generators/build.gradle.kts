@@ -55,7 +55,7 @@ kotlin {
     val jsMain by getting {
       resources.srcDirs("resources")
       dependencies {
-        implementation("com.squareup.okio:okio-nodefilesystem:3.1.0")
+        implementation("com.squareup.okio:okio-nodefilesystem:3.2.0")
       }
     }
     val jsTest by getting
