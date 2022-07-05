@@ -1,6 +1,6 @@
 plugins {
   kotlin("jvm") version "1.7.0" apply false
-  kotlin("multiplatform") version "1.6.21" apply false
+  kotlin("multiplatform") version "1.7.0" apply false
   id("io.bkbn.sourdough.root") version "0.9.0"
   id("com.github.jakemarsden.git-hooks") version "0.0.2"
   id("org.jetbrains.dokka") version "1.7.0"
