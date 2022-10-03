@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.8.0] - October 3rd, 2022
 
-Still trying to fix publishing issue
+Still trying to fix publishing issue, also dropped dokka, will be replaced with gitbook soon
 
 ## [0.7.1] - April 19th, 2022
 
