@@ -1,6 +1,7 @@
 plugins {
   kotlin("multiplatform")
-  id("io.kotest.multiplatform") version "5.4.2"
+  id("io.bkbn.sourdough.library.mpp") version "0.12.0"
+  id("io.kotest.multiplatform") version "5.5.0"
   id("io.gitlab.arturbosch.detekt") version "1.21.0"
   id("com.adarshr.test-logger") version "3.2.0"
   id("org.jetbrains.dokka")
@@ -9,17 +10,17 @@ plugins {
   id("signing")
 }
 
-//sourdough {
-//  githubOrg.set("unredundant")
-//  githubRepo.set("satisfaketion")
-//  libraryName.set("Satisfaketion")
-//  libraryDescription.set("A data generator that is as beautiful and powerful as you are ❤️")
-//  licenseName.set("MIT License")
-//  licenseUrl.set("https://mit-license.org")
-//  developerId.set("unredundant")
-//  developerName.set("Ryan Brink")
-//  developerEmail.set("admin@bkbn.io")
-//}
+sourdoughLibrary {
+  githubOrg.set("unredundant")
+  githubRepo.set("satisfaketion")
+  libraryName.set("Satisfaketion")
+  libraryDescription.set("A data generator that is as beautiful and powerful as you are ❤️")
+  licenseName.set("MIT License")
+  licenseUrl.set("https://mit-license.org")
+  developerId.set("unredundant")
+  developerName.set("Ryan Brink")
+  developerEmail.set("admin@bkbn.io")
+}
 
 dependencies {
   detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.21.0")
@@ -57,7 +58,7 @@ kotlin {
     }
     val jvmTest by getting {
       dependencies {
-        implementation("io.kotest:kotest-runner-junit5-jvm:5.4.2")
+        implementation("io.kotest:kotest-runner-junit5-jvm:5.5.0")
         implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
         implementation("io.kotest:kotest-assertions-kotlinx-time-jvm:4.4.3")
       }
