@@ -1,8 +1,7 @@
 plugins {
   kotlin("multiplatform")
-  id("io.bkbn.sourdough.library.mpp") version "0.6.0"
-  id("io.kotest.multiplatform") version "5.2.3"
-  id("io.gitlab.arturbosch.detekt") version "1.20.0"
+  id("io.kotest.multiplatform") version "5.4.2"
+  id("io.gitlab.arturbosch.detekt") version "1.21.0"
   id("com.adarshr.test-logger") version "3.2.0"
   id("org.jetbrains.dokka")
   id("maven-publish")
@@ -10,30 +9,46 @@ plugins {
   id("signing")
 }
 
-sourdough {
-  githubOrg.set("unredundant")
-  githubRepo.set("satisfaketion")
-  libraryName.set("Satisfaketion")
-  libraryDescription.set("A data generator that is as beautiful and powerful as you are ❤️")
-  licenseName.set("MIT License")
-  licenseUrl.set("https://mit-license.org")
-  developerId.set("unredundant")
-  developerName.set("Ryan Brink")
-  developerEmail.set("admin@bkbn.io")
-}
+//sourdough {
+//  githubOrg.set("unredundant")
+//  githubRepo.set("satisfaketion")
+//  libraryName.set("Satisfaketion")
+//  libraryDescription.set("A data generator that is as beautiful and powerful as you are ❤️")
+//  licenseName.set("MIT License")
+//  licenseUrl.set("https://mit-license.org")
+//  developerId.set("unredundant")
+//  developerName.set("Ryan Brink")
+//  developerEmail.set("admin@bkbn.io")
+//}
 
 dependencies {
-  detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.20.0")
+  detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.21.0")
 }
 
 kotlin {
+  jvm {
+    compilations.all {
+      kotlinOptions.jvmTarget = "1.8"
+    }
+    withJava()
+    testRuns["test"].executionTask.configure {
+      useJUnitPlatform()
+    }
+  }
+  js(BOTH) {
+    browser {
+      commonWebpackConfig {
+        cssSupport.enabled = true
+      }
+    }
+  }
   sourceSets {
     val commonMain by getting {
       dependencies {
         implementation(kotlin("stdlib"))
       }
     }
-    val commonTest by getting
+//    val commonTest by getting
     val jvmMain by getting {
       dependencies {
         implementation(kotlin("stdlib"))
@@ -42,14 +57,14 @@ kotlin {
     }
     val jvmTest by getting {
       dependencies {
-        implementation("io.kotest:kotest-runner-junit5-jvm:5.2.3")
+        implementation("io.kotest:kotest-runner-junit5-jvm:5.4.2")
         implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
         implementation("io.kotest:kotest-assertions-kotlinx-time-jvm:4.4.3")
       }
     }
     val jsMain by getting
     val jsTest by getting
-    val nativeMain by getting
-    val nativeTest by getting
+//    val nativeMain by getting
+//    val nativeTest by getting
   }
 }
