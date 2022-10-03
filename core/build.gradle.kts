@@ -53,13 +53,13 @@ kotlin {
     val jvmMain by getting {
       dependencies {
         implementation(kotlin("stdlib"))
-        implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.21")
+        implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.20")
       }
     }
     val jvmTest by getting {
       dependencies {
         implementation("io.kotest:kotest-runner-junit5-jvm:5.5.0")
-        implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
+        implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
         implementation("io.kotest:kotest-assertions-kotlinx-time-jvm:4.4.3")
       }
     }
