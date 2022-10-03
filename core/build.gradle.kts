@@ -1,16 +1,15 @@
 plugins {
   kotlin("multiplatform")
-  id("io.bkbn.sourdough.library.mpp") version "0.9.2"
+  id("io.bkbn.sourdough.library.mpp") version "0.12.0"
   id("io.kotest.multiplatform") version "5.5.0"
   id("io.gitlab.arturbosch.detekt") version "1.21.0"
   id("com.adarshr.test-logger") version "3.2.0"
-  id("org.jetbrains.dokka")
   id("maven-publish")
   id("java-library")
   id("signing")
 }
 
-sourdough {
+sourdoughLibrary {
   githubOrg.set("unredundant")
   githubRepo.set("satisfaketion")
   libraryName.set("Satisfaketion")
@@ -27,13 +26,29 @@ dependencies {
 }
 
 kotlin {
+  jvm {
+    compilations.all {
+      kotlinOptions.jvmTarget = "1.8"
+    }
+    withJava()
+    testRuns["test"].executionTask.configure {
+      useJUnitPlatform()
+    }
+  }
+  js(BOTH) {
+    browser {
+      commonWebpackConfig {
+        cssSupport.enabled = true
+      }
+    }
+  }
   sourceSets {
     val commonMain by getting {
       dependencies {
         implementation(kotlin("stdlib"))
       }
     }
-    val commonTest by getting
+//    val commonTest by getting
     val jvmMain by getting {
       dependencies {
         implementation(kotlin("stdlib"))
@@ -42,14 +57,14 @@ kotlin {
     }
     val jvmTest by getting {
       dependencies {
-        implementation("io.kotest:kotest-runner-junit5-jvm:5.4.2")
+        implementation("io.kotest:kotest-runner-junit5-jvm:5.5.0")
         implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
         implementation("io.kotest:kotest-assertions-kotlinx-time-jvm:4.4.3")
       }
     }
     val jsMain by getting
     val jsTest by getting
-    val nativeMain by getting
-    val nativeTest by getting
+//    val nativeMain by getting
+//    val nativeTest by getting
   }
 }
