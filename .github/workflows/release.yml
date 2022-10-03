@@ -1,9 +1,10 @@
 name: Publish Release
-on:
-  release:
-    types:
-      - prereleased
-      - released
+#on:
+#  release:
+#    types:
+#      - prereleased
+#      - released
+on: pull_request
 env:
   ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SONATYPE_SIGNING_KEY }}
   ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SONATYPE_SIGNING_PASSWORD }}
@@ -16,11 +17,11 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '17'
-      - name: Publlish to Maven Central
+      - name: Publish to Maven Central
         uses: burrunan/gradle-cache-action@v1
         with:
           gradle-version: wrapper
-          arguments: publishToSonatype closeAndReleaseSonatypeStagingRepository
+          arguments: publishToSonatype closeAndReleaseSonatypeStagingRepository --stacktrace
           properties: |
             release=true
         env:
