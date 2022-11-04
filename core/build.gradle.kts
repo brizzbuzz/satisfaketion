@@ -1,7 +1,7 @@
 plugins {
   kotlin("multiplatform")
   id("io.bkbn.sourdough.library.mpp") version "0.12.0"
-  id("io.kotest.multiplatform") version "5.5.3"
+  id("io.kotest.multiplatform") version "5.5.4"
   id("io.gitlab.arturbosch.detekt") version "1.21.0"
   id("com.adarshr.test-logger") version "3.2.0"
   id("maven-publish")
