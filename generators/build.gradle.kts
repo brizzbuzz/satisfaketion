@@ -51,7 +51,7 @@ kotlin {
         implementation(projects.satisfaketionCore)
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
         implementation("com.squareup.okio:okio:3.2.0")
-        implementation("co.touchlab:kermit:1.1.3")
+        implementation("co.touchlab:kermit:1.2.2")
       }
     }
     val commonTest by getting {

@@ -49,7 +49,7 @@ kotlin {
       dependencies {
         implementation(kotlin("stdlib"))
         implementation(projects.satisfaketionCore)
-        implementation("co.touchlab:kermit:1.1.3")
+        implementation("co.touchlab:kermit:1.2.2")
       }
     }
     val commonTest by getting {
