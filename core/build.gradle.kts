@@ -52,7 +52,7 @@ kotlin {
     val jvmMain by getting {
       dependencies {
         implementation(kotlin("stdlib"))
-        implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.0")
+        implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.10")
       }
     }
     val jvmTest by getting {
