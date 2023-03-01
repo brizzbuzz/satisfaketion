@@ -1,5 +1,3 @@
-# Module satisfaketion-generators
-
 This module contains a collection of useful generators to create fantastic fake data
 
 The current list of pre-existing generators is

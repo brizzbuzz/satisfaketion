@@ -1,4 +1,6 @@
-# Some Nitty and Some Gritty
+# Satisfaketion
+
+Satisfaketion is a library for generating beautiful fake data in Kotlin.
 
 Satisfaketion is broken into three main library modules
 
@@ -84,7 +86,3 @@ val satisfaketion = satisfaketion {
 ```
 
 This would cause approximately 25% of generated objects to have a null field for `prefix` and/or `suffix`
-
-# Modules
-
-Details on each of the modules can be found below 👇

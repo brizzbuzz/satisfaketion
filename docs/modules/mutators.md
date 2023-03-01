@@ -1,5 +1,3 @@
-# Module satisfaketion-mutators
-
 This module contains a collection of useful mutators.
 
 - `WeightedNullabilityMutator`: Given a weight between 0 and 1, will mutate a generator to provided interspersed null
