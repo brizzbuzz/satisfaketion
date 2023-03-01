@@ -36,12 +36,9 @@ kotlin {
       useJUnitPlatform()
     }
   }
-  js(BOTH) {
-    browser {
-      commonWebpackConfig {
-        cssSupport.enabled = true
-      }
-    }
+  js {
+    browser()
+    nodejs()
   }
   sourceSets {
     val commonMain by getting {
