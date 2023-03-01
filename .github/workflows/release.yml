@@ -27,7 +27,7 @@ jobs:
         env:
           ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USER }}
           ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
-      - name: Publish to Maven Central
+      - name: Close and Release Staging
         uses: burrunan/gradle-cache-action@v1
         with:
           gradle-version: wrapper
