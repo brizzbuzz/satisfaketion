@@ -1,10 +1,10 @@
 plugins {
   kotlin("multiplatform")
-  kotlin("plugin.serialization") version "1.7.22"
-  id("io.bkbn.sourdough.library.mpp") version "0.12.0"
-  id("io.kotest.multiplatform") version "5.5.5"
-  id("io.gitlab.arturbosch.detekt") version "1.22.0"
-  id("com.adarshr.test-logger") version "3.2.0"
+  kotlin("plugin.serialization")
+  id("io.bkbn.sourdough.library.mpp")
+  id("io.kotest.multiplatform")
+  id("io.gitlab.arturbosch.detekt")
+  id("com.adarshr.test-logger")
   id("maven-publish")
   id("java-library")
   id("signing")
@@ -37,7 +37,7 @@ kotlin {
     }
   }
   js {
-    browser()
+    // browser()
     nodejs()
   }
   sourceSets {
