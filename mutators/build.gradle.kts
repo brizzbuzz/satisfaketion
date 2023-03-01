@@ -36,7 +36,10 @@ kotlin {
       useJUnitPlatform()
     }
   }
-  js(BOTH)
+  js {
+    browser()
+    nodejs()
+  }
   sourceSets {
     val commonMain by getting {
       resources.srcDirs("resources")
