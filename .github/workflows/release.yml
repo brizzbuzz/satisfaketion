@@ -21,7 +21,17 @@ jobs:
         uses: burrunan/gradle-cache-action@v1
         with:
           gradle-version: wrapper
-          arguments: publishAllPublicationsToSonatypeRepository closeAndReleaseSonatypeStagingRepository --stacktrace
+          arguments: publishAllPublicationsToSonatypeRepository --stacktrace
+          properties: |
+            release=true
+        env:
+          ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USER }}
+          ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
+      - name: Publish to Maven Central
+        uses: burrunan/gradle-cache-action@v1
+        with:
+          gradle-version: wrapper
+          arguments: closeAndReleaseSonatypeStagingRepository --stacktrace
           properties: |
             release=true
         env:
