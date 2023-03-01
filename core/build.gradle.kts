@@ -28,19 +28,16 @@ dependencies {
 kotlin {
   jvm {
     compilations.all {
-      kotlinOptions.jvmTarget = "1.8"
+      kotlinOptions.jvmTarget = "17"
     }
     withJava()
     testRuns["test"].executionTask.configure {
       useJUnitPlatform()
     }
   }
-  js(BOTH) {
-    browser {
-      commonWebpackConfig {
-        cssSupport.enabled = true
-      }
-    }
+  js {
+    browser()
+    nodejs()
   }
   sourceSets {
     val commonMain by getting {
