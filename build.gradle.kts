@@ -1,7 +1,7 @@
 plugins {
   kotlin("jvm") version "1.9.0" apply false
   kotlin("multiplatform") version "1.9.0" apply false
-  kotlin("plugin.serialization") version "1.8.22" apply false
+  kotlin("plugin.serialization") version "1.9.0" apply false
   id("io.bkbn.sourdough.library.mpp") version "0.12.0" apply false
   id("io.kotest.multiplatform") version "5.6.2" apply false
   id("io.gitlab.arturbosch.detekt") version "1.23.0" apply false
