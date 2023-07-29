@@ -4,7 +4,7 @@ plugins {
   kotlin("plugin.serialization") version "1.9.0" apply false
   id("io.bkbn.sourdough.library.mpp") version "0.12.0" apply false
   id("io.kotest.multiplatform") version "5.6.2" apply false
-  id("io.gitlab.arturbosch.detekt") version "1.23.0" apply false
+  id("io.gitlab.arturbosch.detekt") version "1.23.1" apply false
   id("com.adarshr.test-logger") version "3.2.0" apply false
   id("io.bkbn.sourdough.root") version "0.12.0"
   id("com.github.jakemarsden.git-hooks") version "0.0.2"
