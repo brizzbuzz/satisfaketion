@@ -3,7 +3,7 @@ plugins {
   kotlin("multiplatform") version "1.9.10" apply false
   kotlin("plugin.serialization") version "1.9.10" apply false
   id("io.bkbn.sourdough.library.mpp") version "0.12.0" apply false
-  id("io.kotest.multiplatform") version "5.7.1" apply false
+  id("io.kotest.multiplatform") version "5.7.2" apply false
   id("io.gitlab.arturbosch.detekt") version "1.23.1" apply false
   id("com.adarshr.test-logger") version "3.2.0" apply false
   id("io.bkbn.sourdough.root") version "0.12.0"
