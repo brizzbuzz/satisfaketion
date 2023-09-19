@@ -9,6 +9,12 @@ plugins {
   id("signing")
 }
 
+// https://youtrack.jetbrains.com/issue/KT-46466
+tasks.withType<AbstractPublishToMaven>().configureEach {
+  val signingTasks = tasks.withType<Sign>()
+  mustRunAfter(signingTasks)
+}
+
 sourdoughLibrary {
   githubOrg.set("unredundant")
   githubRepo.set("satisfaketion")
@@ -63,5 +69,18 @@ kotlin {
     val jsTest by getting
 //    val nativeMain by getting
 //    val nativeTest by getting
+  }
+
+  val publicationsFromMainHost =
+    listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
+  publishing {
+    publications {
+      matching { it.name in publicationsFromMainHost }.all {
+        val targetPublication = this@all
+        tasks.withType<AbstractPublishToMaven>()
+          .matching { it.publication == targetPublication }
+          .configureEach { onlyIf { findProperty("isMainHost") == "true" } }
+      }
+    }
   }
 }

@@ -22,6 +22,12 @@ sourdoughLibrary {
   developerEmail.set("admin@bkbn.io")
 }
 
+// https://youtrack.jetbrains.com/issue/KT-46466
+tasks.withType<AbstractPublishToMaven>().configureEach {
+  val signingTasks = tasks.withType<Sign>()
+  mustRunAfter(signingTasks)
+}
+
 dependencies {
   detektPlugins(group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version = "1.23.1")
 }
@@ -75,5 +81,18 @@ kotlin {
 //    val nativeTest by getting {
 //      resources.srcDirs("resources")
 //    }
+  }
+
+  val publicationsFromMainHost =
+    listOf(jvm(), js()).map { it.name } + "kotlinMultiplatform"
+  publishing {
+    publications {
+      matching { it.name in publicationsFromMainHost }.all {
+        val targetPublication = this@all
+        tasks.withType<AbstractPublishToMaven>()
+          .matching { it.publication == targetPublication }
+          .configureEach { onlyIf { findProperty("isMainHost") == "true" } }
+      }
+    }
   }
 }
